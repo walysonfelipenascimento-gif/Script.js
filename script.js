@@ -1,266 +1,206 @@
-// ==========================================
-// 🏛️ CJS - SISTEMA DE OPERAÇÕES GOVERNAMENTAIS
-// BANCO DE DATOS LOCAL (Inicialização Automática)
-// ==========================================
+// Variável de controle do cargo estilo Discord
+let cargoAtivoDiscord = "CJSu";
 
-if (!localStorage.getItem('BD_CJS')) {
-    const dadosIniciais = {
-        configuracoes: {
-            permissoesRecruta: {
-                "p-mural": true,       // Mural Principal
-                "p-divisoes": false,   // Hub de Divisões
-                "p-logistica": false,  // Logística/Ações
-                "p-doj": true,         // Diário Oficial
-                "p-sts": false,        // Superior Tribunal Supremo
-                "p-config": false      // Painel Administrativo
-            }
-        },
-        cargos: [
-            { id: 1, nome: "Ministro Supremo", ocupante: "Walyson", nivel: "Alto Comando" },
-            { id: 2, nome: "Diretor de Inteligência", ocupante: "A definir", nivel: "Alto Comando" },
-            { id: 3, nome: "Oficial de Justiça", ocupante: "A definir", nivel: "Corpo Jurídico" },
-            { id: 4, nome: "Agente de Segurança", ocupante: "A definir", nivel: "Operacional" }
-        ],
-        divisoes: [
-            { id: 1, nome: "Diretoria de Inteligência", link: "#", tipo: "Informativa", verificado: true },
-            { id: 2, nome: "Corregedoria Geral", link: "#", tipo: "Divisional", verificado: true }
-        ],
-        muralCJS: [],
-        muralMilitar: [],
-        processosSTS: []
-    };
-    localStorage.setItem('BD_CJS', JSON.stringify(dadosIniciais));
-}
+// Bancos de dados carregados diretamente do LocalStorage para retenção de dados permanente
+let bancoMural = JSON.parse(localStorage.getItem('cjs_db_mural')) || [
+    { titulo: "[DIRETRIZ] Ativação do Sistema Operacional CJS", mensagem: "Implementação oficial concluída com sucesso. A partir deste momento, a plataforma passa a ser o canal centralizado para padronização.", importante: true }
+];
 
-// Carrega os dados na memória ativa do script
-let BD = JSON.parse(localStorage.getItem('BD_CJS'));
-function salvarNoBanco() {
-    localStorage.setItem('BD_CJS', JSON.stringify(BD));
-}
+let bancoJornal = JSON.parse(localStorage.getItem('cjs_db_jornal')) || [
+    { titulo: "Abertura Oficial do Período de Notas", autor: "Comando Supremo", texto: "O Diário Oficial de Julgamentos (D.O.J.) passa a registrar de forma unificada e pública todas as atas civis de hoje em diante.", data: "28/05/2026" }
+];
 
-// ==========================================
-// 🛡️ FUNCTIONALIDADE 1: CONTROLE DE ACESSO
-// ==========================================
+let bancoTickets = JSON.parse(localStorage.getItem('cjs_db_tickets')) || [
+    { id: "4019", tribunal: "STM", autor: "Gabinete Militar", motivo: "Inquérito interno sob procedimentos operacionais de patrulha técnica.", data: "28/05/2026" },
+    { id: "8821", tribunal: "STF", autor: "Ministro Relator", motivo: "Arguição de descumprimento de preceito fundamental sobre as divisões táticas.", data: "28/05/2026" }
+];
 
-function carregarSistemaPorCargo(cargoUsuario) {
-    // cargoUsuario pode ser: 'recruta' ou 'alto_comando'
-    const permissoes = BD.configuracoes.permissoesRecruta;
-    
-    if (cargoUsuario === 'recruta') {
-        // Passa por todas as páginas aplicando a trava de segurança
-        Object.keys(permissoes).forEach(idPagina => {
-            const elementoMenu = document.getElementById(`nav-${idPagina}`);
-            if (elementoMenu) {
-                elementoMenu.style.display = permissoes[idPagina] ? 'block' : 'none';
-            }
-        });
-        // Esconde botões de criação "+" e edição para recrus
-        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
-        console.log("⚡ [CJS Security] Interface restrita para Usuários Iniciais aplicada.");
-    } else {
-        // Alto Comando vê tudo
-        document.querySelectorAll('[id^="nav-"]').forEach(el => el.style.display = 'block');
-        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
-        console.log("👑 [CJS Security] Acesso irrestrito concedido ao Alto Comando.");
-    }
-}
+let bancoDiretrizes = JSON.parse(localStorage.getItem('cjs_db_diretrizes')) || [
+    { titulo: "Art. 1º - Dos Princípios Fundamentais", texto: "Fica instituída a obrigatoriedade da observância estrita da hierarquia de acessos aos canais judiciais do S.T.S." }
+];
 
-// Salvar alteração de permissão que o Admin fizer na Página 6
-function alterarPermissaoRecruta(idPagina, valor) {
-    BD.configuracoes.permissoesRecruta[idPagina] = valor;
-    salvarNoBanco();
-    console.log(`⚙️ [Config] Permissão da página ${idPagina} alterada para: ${valor}`);
-}
-
-// ==========================================
-// 📰 FUNCTIONALIDADE 2: GERADOR DE EMBEDS (MURAL)
-// ==========================================
-
-function publicarEmbed(muralAlvo, titulo, conteudo, ehExtremamenteImportante) {
-    // muralAlvo deve ser: 'muralCJS' ou 'muralMilitar'
-    
-    const novoPost = {
-        id: Date.now(),
-        titulo: titulo,
-        conteudo: conteudo,
-        importante: ehExtremamenteImportante,
-        data: new Date().toLocaleDateString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-    };
-
-    // Adiciona no início do array correspondente
-    BD[muralAlvo].unshift(novoPost);
-    salvarNoBanco();
-    renderizarMurais();
-}
-
-function renderizarMurais() {
-    ['muralCJS', 'muralMilitar'].forEach(muralKey => {
-        const container = document.getElementById(muralKey);
-        if (!container) return;
-        
-        container.innerHTML = ''; // Limpa a tela
-        
-        BD[muralKey].forEach(post => {
-            const embed = document.createElement('div');
-            embed.className = 'discord-embed';
-            
-            // Ativa o efeito Dourado Brilhante si for Marcado como Extremamente Importante
-            if (post.importante) {
-                embed.classList.add('embed-dourado-brilhante');
-            } else {
-                embed.style.borderLeft = '4px solid #c5a059'; // Dourado padrão CJS
-            }
-            
-            embed.innerHTML = `
-                <div class="embed-content">
-                    <h3 class="embed-title">${post.titulo}</h3>
-                    <p class="embed-description">${post.conteudo}</p>
-                    <span class="embed-footer">⚡ Emitido pelo Alto Comando CJS | ${post.data}</span>
-                </div>
-            `;
-            container.appendChild(embed);
-        });
-    });
-}
-
-// ==========================================
-// 🌐 FUNCTIONALIDADE 3: SISTEMA "+" (CRIADOR DE DIVISÕES)
-// ==========================================
-
-function criarNovaDivisao(nome, link, tipo, ehVerificado) {
-    const novaDivisao = {
-        id: Date.now(),
-        nome: nome,
-        link: link,
-        tipo: tipo, // "Informativa" ou "Divisional"
-        verificado: ehVerificado // true ou false
-    };
-
-    BD.divisoes.push(novaDivisao);
-    salvarNoBanco();
-    renderizarDivisoes();
-}
-
-function renderizarDivisoes() {
-    const container = document.getElementById('hub-divisoes');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    BD.divisoes.forEach(div => {
-        const card = document.createElement('div');
-        card.className = 'card-divisao';
-        
-        let seloEspecial = '';
-        // Aplica a animação visual se o órgão for homologado/verificado
-        if (div.verificado) {
-            card.classList.add('servidor-verificado');
-            seloEspecial = '<span class="badge-verificado">✔ HOMOLOGADO CJS</span>';
-        }
-
-        card.innerHTML = `
-            <div class="card-header">
-                <h4>${div.nome}</h4>
-                ${seloEspecial}
-            </div>
-            <p>Classificação: <strong>${div.tipo}</strong></p>
-            <a href="${div.link}" target="_blank" class="btn-acesso">Acessar Jurisdição</a>
-        `;
-        container.appendChild(card);
-    });
-}
-
-// ==========================================
-// ⚖️ FUNCTIONALIDADE 4: SUPREMO TRIBUNAL (STS)
-// ==========================================
-
-function protocolarProcesso(reu, infracao, relator) {
-    const novoProcesso = {
-        protocolo: `#${Math.floor(100000 + Math.random() * 900000)}`,
-        reu: reu,
-        infracao: infracao,
-        relator: relator,
-        status: "Em Análise Pelo Colegiado Supremo",
-        data: new Date().toLocaleDateString('pt-BR')
-    };
-
-    BD.processosSTS.unshift(novoProcesso);
-    salvarNoBanco();
-    renderizarSTS();
-}
-
-function renderizarSTS() {
-    const container = document.getElementById('painel-processos');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    BD.processosSTS.forEach(proc => {
-        const item = document.createElement('div');
-        item.className = 'item-processo';
-        item.innerHTML = `
-            <div class="proc-header">
-                <span class="proc-id">${proc.protocolo}</span>
-                <span class="proc-status">${proc.status}</span>
-            </div>
-            <p><strong>Réu/Alvo:</strong> ${proc.reu}</p>
-            <p><strong>Infração Constitucional:</strong> ${proc.infracao}</p>
-            <p><strong>Ministro Relator:</strong> ${proc.relator}</p>
-            <small>Data de Abertura: ${proc.data}</small>
-        `;
-        container.appendChild(item);
-    });
-}
-
-// ==========================================
-// 👥 FUNCTIONALIDADE 5: GESTÃO DE CARGOS
-// ==========================================
-
-function atualizarOcupanteCargo(idCargo, novoNome) {
-    const cargo = BD.cargos.find(c => c.id === idCargo);
-    if (cargo) {
-        cargo.ocupante = novoNome;
-        salvarNoBanco();
-        renderizarCargos();
-    }
-}
-
-function renderizarCargos() {
-    const container = document.getElementById('tabela-cargos');
-    if (!container) return;
-
-    container.innerHTML = '';
-    BD.cargos.forEach(cargo => {
-        const linha = document.createElement('tr');
-        linha.innerHTML = `
-            <td><strong>${cargo.nome}</strong></td>
-            <td>${cargo.nivel}</td>
-            <td><span class="nome-ocupante">${cargo.ocupante}</span></td>
-            <td><button class="btn-editar admin-only" onclick="this.style.display='none'; promptDeEdicao(${cargo.id})">Alterar Oficial</button></td>
-        `;
-        container.appendChild(linha);
-    });
-}
-
-function promptDeEdicao(id) {
-    let novoNome = prompt("Digite o nome do novo Oficial/Membro para o cargo:");
-    if (novoNome) {
-        atualizarOcupanteCargo(id, novoNome);
-    } else {
-        renderizarCargos();
-    }
-}
-
-// ==========================================
-// INITIALIZADOR AUTOMÁTICO DA PÁGINA
-// ==========================================
+// Execução ao iniciar o carregamento da página
 window.onload = function() {
-    // Definição padrão ao carregar: Mude para 'recruta' para testar a segurança oculta
-    carregarSistemaPorCargo('alto_comando'); 
-    
-    // Renderiza tudo o que já estiver salvo no banco
-    renderizarMurais();
-    renderizarDivisoes();
-    renderizarSTS();
-    renderizarCargos();
+    renderizarMural();
+    renderizarJornal();
+    renderizarTickets();
+    renderizarDiretrizes();
 };
+
+// Alternância de Abas e Abordagem Modular
+function alternarAbasDoSistema(idAba) {
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+    
+    const containerAlvo = document.getElementById(`aba-${idAba}`);
+    if (containerAlvo) containerAlvo.classList.add('active');
+    
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    }
+}
+
+// Alteração Dinâmica de Cargos (Discord Roles)
+function atualizarCargoSessao(cargo) {
+    cargoAtivoDiscord = cargo;
+    document.querySelectorAll('.role-pill').forEach(btn => btn.classList.remove('active'));
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    }
+    renderizarTickets();
+}
+
+// Emissões e Cadastros (Painel de Controle)
+function enviarNovoMural() {
+    const t = document.getElementById('mural-titulo').value;
+    const m = document.getElementById('mural-conteudo-txt').value;
+    const imp = document.getElementById('mural-importante').checked;
+
+    if (!t || !m) return alert("Aviso: Preencha o título e o conteúdo do comunicado.");
+
+    bancoMural.unshift({ titulo: t, mensagem: m, importante: imp });
+    localStorage.setItem('cjs_db_mural', JSON.stringify(bancoMural));
+    
+    document.getElementById('mural-titulo').value = '';
+    document.getElementById('mural-conteudo-txt').value = '';
+    document.getElementById('mural-importante').checked = false;
+    
+    renderizarMural();
+    alert("Comunicado fixado no mural com sucesso!");
+}
+
+function enviarNovoJornal() {
+    const t = document.getElementById('jornal-titulo').value;
+    const a = document.getElementById('jornal-autor').value;
+    const tx = document.getElementById('jornal-texto').value;
+
+    if (!t || !a || !tx) return alert("Aviso: Insira todos os dados exigidos pelo jornal.");
+
+    bancoJornal.unshift({ titulo: t, autor: a, texto: tx, data: "28/05/2026" });
+    localStorage.setItem('cjs_db_jornal', JSON.stringify(bancoJornal));
+    
+    document.getElementById('jornal-titulo').value = '';
+    document.getElementById('jornal-autor').value = '';
+    document.getElementById('jornal-texto').value = '';
+    
+    renderizarJornal();
+    alert("Matéria expedida com sucesso no Diário Oficial!");
+}
+
+function enviarNovoTicket() {
+    const trib = document.getElementById('ticket-tribunal').value;
+    const aut = document.getElementById('ticket-autor').value;
+    const mot = document.getElementById('ticket-motivo').value;
+
+    if (!aut || !mot) return alert("Aviso: Declare o oficial solicitante e o resumo da causa.");
+
+    const aleatorioId = Math.floor(1000 + Math.random() * 9000);
+    bancoTickets.unshift({ id: aleatorioId.toString(), tribunal: trib, autor: aut, motivo: mot, data: "28/05/2026" });
+    localStorage.setItem('cjs_db_tickets', JSON.stringify(bancoTickets));
+    
+    document.getElementById('ticket-autor').value = '';
+    document.getElementById('ticket-motivo').value = '';
+    
+    renderizarTickets();
+    alert(`Canal privado #${aleatorioId} gerado para o tribunal de destino!`);
+}
+
+function enviarNovaDiretriz() {
+    const t = document.getElementById('diretriz-titulo-input').value;
+    const tx = document.getElementById('diretriz-texto-input').value;
+
+    if (!t || !tx) return alert("Aviso: O título e o texto normativo são necessários.");
+
+    bancoDiretrizes.unshift({ titulo: t, texto: tx });
+    localStorage.setItem('cjs_db_diretrizes', JSON.stringify(bancoDiretrizes));
+    
+    document.getElementById('diretriz-titulo-input').value = '';
+    document.getElementById('diretriz-texto-input').value = '';
+    
+    renderizarDiretrizes();
+    alert("Artigo regulamentar arquivado em Diretrizes!");
+}
+
+// Motores de Renderização
+function renderizarMural() {
+    const caixa = document.getElementById('blocoMuralCJS');
+    if (!caixa) return;
+    caixa.innerHTML = '';
+    
+    bancoMural.forEach(m => {
+        caixa.innerHTML += `
+            <div class="discord-embed ${m.importante ? 'embed-dourado-brillante' : ''}">
+                <div class="embed-content">
+                    <div class="embed-title">${m.titulo}</div>
+                    <div class="embed-description">${m.mensagem}</div>
+                </div>
+            </div>`;
+    });
+}
+
+function renderizarJornal() {
+    const caixa = document.getElementById('jornal-conteudo');
+    if (!caixa) return;
+    caixa.innerHTML = '';
+    
+    bancoJornal.forEach(j => {
+        caixa.innerHTML += `
+            <div class="jornal-item">
+                <div class="jornal-header">
+                    <h3>${j.titulo}</h3>
+                    <div class="jornal-meta"><span>Relator: ${j.autor}</span><span>Emissão: ${j.data}</span></div>
+                </div>
+                <div class="jornal-corpo">${j.texto}</div>
+            </div>`;
+    });
+}
+
+function renderizarTickets() {
+    const caixa = document.getElementById('lista-tickets');
+    if (!caixa) return;
+    caixa.innerHTML = '';
+
+    // Lógica cumulativa de visualização baseada na hierarquia fornecida
+    const hierarquia = {
+        "STM": ["STM"],
+        "STJ": ["STM", "STJ"],
+        "STF": ["STM", "STJ", "STF"],
+        "CJSu": ["STM", "STJ", "STF", "CJSu"]
+    };
+
+    const tribunaisPermitidos = hierarquia[cargoAtivoDiscord] || ["STM"];
+    let itensExibidos = 0;
+
+    bancoTickets.forEach(t => {
+        if (tribunaisPermitidos.includes(t.tribunal)) {
+            itensExibidos++;
+            caixa.innerHTML += `
+                <div class="ticket-card t-${t.tribunal}">
+                    <div class="ticket-top">
+                        <span class="ticket-id">🔒 canal-privado-#${t.id}</span>
+                        <span class="badge-discord">@${t.tribunal}</span>
+                    </div>
+                    <div class="ticket-motivo">${t.motivo}</div>
+                    <div class="ticket-footer"><span>Aberto por: <b>${t.autor}</b></span><span>Data: ${t.data}</span></div>
+                </div>`;
+        }
+    });
+
+    if (itensExibidos === 0) {
+        caixa.innerHTML = `<p style="text-align:center; color:#949ba4; font-size:0.9rem; padding:15px;">Sem processos ou tickets sob sua alçada no momento.</p>`;
+    }
+}
+
+function renderizarDiretrizes() {
+    const caixa = document.getElementById('diretriz-conteudo');
+    if (!caixa) return;
+    caixa.innerHTML = '';
+    
+    bancoDiretrizes.forEach(d => {
+        caixa.innerHTML += `
+            <div class="diretriz-card">
+                <div class="diretriz-titulo">⚖️ ${d.titulo}</div>
+                <div class="diretriz-texto">${d.texto}</div>
+            </div>`;
+    });
+}
