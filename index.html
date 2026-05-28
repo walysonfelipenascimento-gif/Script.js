@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.O.G. | Comando Jurídico Supremo</title>
+    <style>
+        /* --- ESTILOS INTERNOS E IDENTIDADE VISUAL --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0c10; color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        header { background-color: #1f2833; border-bottom: 2px solid #c5a059; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 22px; font-weight: bold; color: #c5a059; letter-spacing: 2px; }
+        
+        nav { display: flex; gap: 15px; }
+        nav button { background: none; border: none; color: #fff; font-weight: 600; cursor: pointer; padding: 5px 10px; transition: 0.3s; }
+        nav button:hover { color: #c5a059; }
+
+        .container { flex: 1; padding: 30px; max-width: 1200px; margin: 0 auto; w-index: 100%; display: none; }
+        .active-tab { display: block; }
+
+        h2 { color: #c5a059; margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid #1f2833; padding-bottom: 10px; }
+        
+        /* --- ESTILO DOS EMBEDS (ESTILO DISCORD) --- */
+        .discord-embed { background-color: #1e1f22; border-radius: 4px; padding: 16px; margin-bottom: 15px; border-left: 4px solid #c5a059; text-align: left; }
+        .embed-title { color: #ffffff; font-size: 1.1rem; margin-bottom: 6px; }
+        .embed-description { color: #dbdee1; font-size: 0.95rem; margin-bottom: 10px; }
+        .embed-footer { color: #949ba4; font-size: 0.75rem; }
+
+        /* --- ANIMAÇÃO DOURADA BRILHANTE (EXTREMAMENTE IMPORTANTE) --- */
+        .embed-dourado-brilhante {
+            border-left: 5px solid #ffcc00;
+            background: linear-gradient(135deg, #1e1f22 70%, #2b2308 100%);
+            animation: pulsarBrilhoDourado 2.5s infinite alternate;
+        }
+        @keyframes pulsarBrilhoDourado {
+            0% { box-shadow: 0 0 5px rgba(255, 204, 0, 0.2); border-color: #c5a059; }
+            100% { box-shadow: 0 0 20px rgba(255, 204, 0, 0.6); border-color: #fff1b0; }
+        }
+
+        /* --- CARDS DE DIVISÕES VERIFICADAS --- */
+        .card-divisao { background: #1f2833; padding: 20px; border-radius: 6px; margin-bottom: 15px; }
+        .servidor-verificado {
+            border: 2px solid transparent;
+            background-image: linear-gradient(#1f2833, #1f2833), linear-gradient(135deg, #c5a059, #ffea9f, #c5a059);
+            background-origin: border-box; background-clip: padding-box, border-box;
+        }
+        .badge-verificado { background-color: #c5a059; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 3px; margin-left: 10px; }
+
+        /* TABELAS E FORMULÁRIOS */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1f2833; }
+        th { background-color: #1f2833; color: #c5a059; }
+        .form-grupo { margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px; }
+        input, select, textarea { padding: 10px; background: #1e1f22; border: 1px solid #1f2833; color: #fff; border-radius: 4px; }
+        button.btn-acao { background-color: #c5a059; color: #000; font-weight: bold; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        
+        /* SISTEMA DE PROCESSO STS */
+        .item-processo { background: #1e1f22; padding: 15px; border-radius: 4px; border-left: 4px solid #e74c3c; margin-bottom: 15px; }
+        .proc-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .proc-id { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">CJS // SISTEMA OPERACIONAL</div>
+        <nav>
+            <button id="nav-p-mural" onclick="mudarAba('p-mural')">Murais</button>
+            <button id="nav-p-divisoes" onclick="mudarAba('p-divisoes')">Divisões</button>
+            <button id="nav-p-logistica" onclick="mudarAba('p-logistica')">Logística</button>
+            <button id="nav-p-doj" onclick="mudarAba('p-doj')">D.O.J.</button>
+            <button id="nav-p-sts" onclick="mudarAba('p-sts')">S.T.S.</button>
+            <button id="nav-p-config" onclick="mudarAba('p-config')">Configurações</button>
+        </nav>
+    </header>
+
+    <!-- PÁGINA 1: MURAIS -->
+    <div id="p-mural" class="container active-tab">
+        <h2>Mural Supremo CJS</h2>
+        <div id="muralCJS"></div>
+        
+        <h2>Mural das Forças Operacionais</h2>
+        <div id="muralMilitar"></div>
+    </div>
+
+    <!-- PÁGINA 2: DIVISÕES -->
+    <div id="p-divisoes" class="container">
+        <h2>Hub de Órgãos Integrados</h2>
+        <div id="hub-divisoes"></div>
+    </div>
+
+    <!-- PÁGINA 3: LOGÍSTICA -->
+    <div id="p-logistica" class="container">
+        <h2>Ações em Instituição & Logística</h2>
+        <p>Painel de monitoramento de rondas de segurança e relatórios táticos em desenvolvimento.</p>
+    </div>
+
+    <!-- PÁGINA 4: D.O.J -->
+    <div id="p-doj" class="container">
+        <h2>Diário Oficial de Julgamentos (D.O.J.)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ato Administrativo</th>
+                    <th>Classificação</th>
+                    <th>Oficial Responsável</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-cargos">
+                <!-- Puxado pelo Script -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PÁGINA 5: S.T.S -->
+    <div id="p-sts" class="container">
+        <h2>Superior Tribunal Supremo (S.T.S.)</h2>
+        <div id="painel-processos"></div>
+    </div>
+
+    <!-- PÁGINA 6: CONFIGURAÇÕES (PAINEL ADMINISTRATIVO) -->
+    <div id="p-config" class="container">
+        <h2>Painel de Controle e Ferramentas "+"</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div>
+                <h3>Postar Comunicado (Embed)</h3>
+                <div class="form-grupo">
+                    <label>Alvo:</label>
+                    <select id="post-mural"><option value="muralCJS">Mural CJS</option><option value="muralMilitar">Mural Operacional</option></select>
+                </div>
+                <div class="form-grupo">
+                    <label>Título:</label>
+                    <input type="text" id="post-titulo">
+                </div>
+                <div class="form-grupo">
+                    <label>Conteúdo:</label>
+                    <textarea id="post-conteudo" rows="3"></textarea>
+                </div>
+                <div class="form-grupo" style="flex-direction: row; align-items: center;">
+                    <input type="checkbox" id="post-importante"> <label>Extremamente Importante (Dourado Brilhante)</label>
+                </div>
+                <button class="btn-acao" onclick="executarPost()">Publicar Embed</button>
+            </div>
+
+            <div>
+                <h3>Adicionar Nova Divisão/Servidor (+)</h3>
+                <div class="form-grupo">
+                    <label>Nome do Órgão:</label>
+                    <input type="text" id="div-nome">
+                </div>
+                <div class="form-grupo">
+                    <label>Link de Acesso:</label>
+                    <input type="text" id="div-link" value="#">
+                </div>
+                <div class="form-grupo">
+                    <label>Tipo:</label>
+                    <select id="div-tipo"><option value="Informativa">Informativa</option><option value="Divisional">Divisional</option></select>
+                </div>
+                <div class="form-grupo" style="flex-direction: row; align-items: center;">
+                    <input type="checkbox" id="div-verificado"> <label>Homologado/Verificado pelo CJS</label>
+                </div>
+                <button class="btn-acao" onclick="ejecutarCriacaoDiv()">Inserir Elemento</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função auxiliar para mudar as abas visíveis na tela
+        function mudarAba(idAba) {
+            document.querySelectorAll('.container').forEach(c => c.classList.remove('active-tab'));
+            document.getElementById(idAba).classList.add('active-tab');
+        }
+        // Funções de ponte para o arquivo script.js
+        function ejecutarPost() {
+            publicarEmbed(
+                document.getElementById('post-mural').value,
+                document.getElementById('post-titulo').value,
+                document.getElementById('post-conteudo').value,
+                document.getElementById('post-importante').checked
+            );
+        }
+        function ejecutarCriacaoDiv() {
+            criarNovaDivisao(
+                document.getElementById('div-nome').value,
+                document.getElementById('div-link').value,
+                document.getElementById('div-tipo').value,
+                document.getElementById('div-verificado').checked
+            );
+        }
+    </script>
+</body>
+</html>
