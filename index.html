@@ -30,14 +30,13 @@
             min-height: 100vh;
         }
 
-        /* BARRA SUPERIOR DE NAVEGAÇÃO */
         header {
             background-color: var(--bg-card);
             border-bottom: 2px solid var(--dourado);
             padding: 15px 20px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 10px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -45,18 +44,20 @@
 
         .logo-area h1 {
             color: var(--dourado);
-            font-size: 1.4rem;
-            letter-spacing: 2px;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
             font-weight: 800;
+            text-align: center;
         }
 
         nav {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
             white-space: nowrap;
             padding-bottom: 5px;
-            max-width: 70%;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         nav::-webkit-scrollbar {
@@ -71,12 +72,13 @@
             background: transparent;
             border: 1px solid transparent;
             color: var(--texto);
-            padding: 8px 14px;
+            padding: 6px 12px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: 0.3s;
             border-radius: 4px;
+            flex-shrink: 0;
         }
 
         .btn-nav:hover, .btn-nav.active {
@@ -85,10 +87,9 @@
             background-color: rgba(197, 160, 89, 0.05);
         }
 
-        /* RECIPIENTES DE PÁGINAS */
         .container {
             flex: 1;
-            padding: 20px;
+            padding: 15px;
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
@@ -100,29 +101,23 @@
 
         .pagina.active {
             display: block;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         h2 {
             color: var(--dourado);
             border-bottom: 1px solid var(--borda);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
             letter-spacing: 1px;
         }
 
-        /* EMBEDS ESTILO DISCORD */
         .mural-container {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-top: 15px;
+            margin-top: 10px;
+            min-height: 50px;
         }
 
         .discord-embed {
@@ -151,13 +146,6 @@
             white-space: pre-wrap;
         }
 
-        .embed-footer {
-            font-size: 0.75rem;
-            color: #8b949e;
-            margin-top: 5px;
-        }
-
-        /* EFEITO EXTRA: DOURADO BRILHANTE ANIMADO */
         .embed-dourado-brillante {
             border-left: 4px solid var(--dourado);
             box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
@@ -169,74 +157,35 @@
             to { border-left-color: var(--dourado-brilho); box-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
         }
 
-        /* GRID DO HUB DE DIVISÕES */
         .grid-divisoes {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 15px;
         }
 
         .card-divisao {
             background-color: var(--bg-card);
             border: 1px solid var(--borda);
             border-radius: 6px;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            transition: 0.3s;
-        }
-
-        .card-divisao:hover {
-            transform: translateY(-3px);
-            border-color: var(--dourado);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .card-header h4 {
-            color: var(--texto-claro);
-            font-size: 1.1rem;
-        }
-
-        .badge-verificado {
-            background-color: rgba(197, 160, 89, 0.15);
-            color: var(--dourado);
-            border: 1px solid var(--dourado);
-            font-size: 0.65rem;
-            padding: 3px 6px;
-            border-radius: 3px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .servidor-verificado {
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.1);
+            gap: 10px;
         }
 
         .btn-acesso {
-            display: inline-block;
+            display: block;
             background-color: var(--dourado);
             color: #000;
             text-align: center;
-            padding: 10px;
+            padding: 8px;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 700;
             font-size: 0.9rem;
             margin-top: auto;
-            transition: 0.2s;
         }
 
-        .btn-acesso:hover {
-            background-color: var(--dourado-brilho);
-        }
-
-        /* TABELAS (LOGÍSTICA / CARGOS) */
         .table-container {
             overflow-x: auto;
             background-color: var(--bg-card);
@@ -248,84 +197,22 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         th, td {
-            padding: 12px 15px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--borda);
         }
 
         th {
             background-color: rgba(0, 0, 0, 0.2);
             color: var(--dourado);
-            font-weight: 600;
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .nome-ocupante {
-            color: var(--texto-claro);
-            font-weight: 600;
-        }
-
-        .btn-editar {
-            background: transparent;
-            border: 1px solid var(--borda);
-            color: var(--texto);
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .btn-editar:hover {
-            border-color: var(--dourado);
-            color: var(--dourado);
-        }
-
-        /* SUPREMO TRIBUNAL (STS) */
-        .painel-sts {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .item-processo {
-            background-color: var(--bg-card);
-            border: 1px solid var(--borda);
-            border-left: 4px solid #da373c; /* Vermelho Tribunal */
-            border-radius: 4px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .proc-header {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 700;
-        }
-
-        .proc-id {
-            color: var(--dourado);
-        }
-
-        .proc-status {
-            font-size: 0.8rem;
-            background-color: rgba(218, 55, 60, 0.1);
-            color: #da373c;
-            padding: 2px 6px;
-            border-radius: 3px;
-        }
-
-        /* PAINEL ADMINISTRATIVO / FORMULÁRIOS */
         .grid-admin {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
         }
 
@@ -333,28 +220,16 @@
             background-color: var(--bg-card);
             border: 1px solid var(--borda);
             border-radius: 6px;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .secao-form h3 {
-            color: var(--texto-claro);
-            font-size: 1.1rem;
-            border-bottom: 1px solid var(--borda);
-            padding-bottom: 5px;
+            gap: 12px;
         }
 
         .form-grupo {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-grupo label {
-            font-size: 0.85rem;
-            font-weight: 600;
+            gap: 5px;
         }
 
         .form-grupo input, .form-grupo textarea, .form-grupo select {
@@ -364,39 +239,22 @@
             padding: 10px;
             border-radius: 4px;
             font-size: 0.9rem;
-            outline: none;
-        }
-
-        .form-grupo input:focus, .form-grupo textarea:focus, .form-grupo select:focus {
-            border-color: var(--dourado);
         }
 
         .form-grupo-check {
             flex-direction: row;
             align-items: center;
-            gap: 10px;
-            margin-top: 5px;
-        }
-
-        .form-grupo-check input {
-            cursor: pointer;
-            width: 16px;
-            height: 16px;
+            gap: 8px;
         }
 
         .btn-acao {
             background-color: var(--dourado);
             color: #000;
             border: none;
-            padding: 12px;
+            padding: 10px;
             border-radius: 4px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-acao:hover {
-            background-color: var(--dourado-brilho);
         }
     </style>
 </head>
@@ -408,42 +266,41 @@
         </div>
         <nav>
             <button class="btn-nav active" onclick="mudarAba('mural')">Murais</button>
-            <button class="btn-nav" id="nav-p-divisoes" onclick="mudarAba('divisoes')">Divisões</button>
-            <button class="btn-nav" id="nav-p-logistica" onclick="mudarAba('logistica')">Logística</button>
-            <button class="btn-nav" id="nav-p-doj" onclick="mudarAba('doj')">D.O.J.</button>
-            <button class="btn-nav" id="nav-p-sts" onclick="mudarAba('sts')">S.T.S.</button>
-            <button class="btn-nav admin-only" id="nav-p-config" onclick="mudarAba('admin')">Configurações</button>
+            <button class="btn-nav" onclick="mudarAba('divisoes')">Divisões</button>
+            <button class="btn-nav" onclick="mudarAba('logistica')">Logística</button>
+            <button class="btn-nav" onclick="mudarAba('doj')">D.O.J.</button>
+            <button class="btn-nav" onclick="mudarAba('sts')">S.T.S.</button>
+            <button class="btn-nav" onclick="mudarAba('admin')">Configurações</button>
         </nav>
     </header>
 
     <div class="container">
         
-        <!-- ABA 1: MURAIS -->
+        <!-- MURAIS -->
         <section id="aba-mural" class="pagina active">
             <h2>MURAL SUPREMO CJS</h2>
             <div id="muralCJS" class="mural-container"></div>
             
-            <h2 style="margin-top: 40px;">MURAL DAS FORÇAS OPERACIONAIS</h2>
+            <h2 style="margin-top: 30px;">MURAL DAS FORÇAS OPERACIONAIS</h2>
             <div id="muralMilitar" class="mural-container"></div>
         </section>
 
-        <!-- ABA 2: DIVISÕES -->
+        <!-- DIVISÕES -->
         <section id="aba-divisoes" class="pagina">
-            <h2>HUB DE DIVISÕES E JURISDIÇÕES</h2>
+            <h2>HUB DE ÓRGÃOS INTEGRADOS</h2>
             <div id="hub-divisoes" class="grid-divisoes"></div>
         </section>
 
-        <!-- ABA 3: LOGÍSTICA / CARGOS -->
+        <!-- LOGÍSTICA -->
         <section id="aba-logistica" class="pagina">
-            <h2>QUADRO DE CARGOS E OFICIAIS</h2>
+            <h2>AÇÕES EM INSTITUIÇÃO & LOGÍSTICA</h2>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
                             <th>Cargo / Função</th>
-                            <th>Nível Hierárquico</th>
+                            <th>Nível</th>
                             <th>Oficial Designado</th>
-                            <th class="admin-only">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="tabela-cargos"></tbody>
@@ -451,29 +308,28 @@
             </div>
         </section>
 
-        <!-- ABA 4: DIÁRIO OFICIAL -->
+        <!-- D.O.J -->
         <section id="aba-doj" class="pagina">
-            <h2>DIÁRIO OFICIAL DA JUSTIÇA (D.O.J.)</h2>
-            <div class="discord-embed" style="border-left: 4px solid #4f545c;">
+            <h2>DIÁRIO OFICIAL DE JULGAMENTOS (D.O.J.)</h2>
+            <div class="discord-embed">
                 <div class="embed-content">
-                    <h3 class="embed-title">📜 Repositório de Atas e Decretos</h3>
-                    <p class="embed-description">Todas as resoluções da corte, nomeações de magistrados e sanções institucionais permanentes ficam arquivadas publicamente nesta seção para fins de transparência constitucional.</p>
+                    <h3 class="embed-title">📜 Atas e Decretos</h3>
+                    <p class="embed-description">Painel de monitoramento de rondas de segurança e relatórios táticos em desenvolvimento.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ABA 5: SUPERIOR TRIBUNAL (STS) -->
+        <!-- S.T.S -->
         <section id="aba-sts" class="pagina">
             <h2>SUPERIOR TRIBUNAL SUPREMO (S.T.S.)</h2>
-            <div class="painel-sts" id="painel-processos"></div>
+            <div id="painel-processos" class="mural-container"></div>
         </section>
 
-        <!-- ABA 6: PAINEL ADMINISTRATIVO -->
+        <!-- PAINEL ADMIN -->
         <section id="aba-admin" class="pagina">
             <h2>PAINEL DE CONTROLE E FERRAMENTAS "+"</h2>
             
             <div class="grid-admin">
-                <!-- FORMULÁRIO 1: EMBEDS -->
                 <div class="secao-form">
                     <h3>Postar Comunicado (Embed)</h3>
                     <div class="form-grupo">
@@ -485,49 +341,22 @@
                     </div>
                     <div class="form-grupo">
                         <label>Título:</label>
-                        <input type="text" id="post-titulo" placeholder="Ex: [DIRETRIZ] Nova Ordem...">
+                        <input type="text" id="post-titulo" placeholder="Digite o título...">
                     </div>
                     <div class="form-grupo">
                         <label>Conteúdo:</label>
-                        <textarea id="post-conteudo" rows="4" placeholder="Digite a mensagem oficial aqui..."></textarea>
+                        <textarea id="post-conteudo" rows="4" placeholder="Digite a mensagem..."></textarea>
                     </div>
                     <div class="form-grupo form-grupo-check">
                         <input type="checkbox" id="post-importante">
-                        <label for="post-importante">Extremamente Importante (Dourado Brilhante)</label>
+                        <label for="post-importante">Extremamente Importante (Dourado)</label>
                     </div>
                     <button class="btn-acao" onclick="executarPost()">Publicar Embed</button>
                 </div>
-
-                <!-- FORMULÁRIO 2: CRIAR DIVISÃO -->
-                <div class="secao-form">
-                    <h3>Adicionar Nova Divisão/Servidor (+)</h3>
-                    <div class="form-grupo">
-                        <label>Nome do Órgão:</label>
-                        <input type="text" id="div-nome" placeholder="Ex: Diretoria de Operações">
-                    </div>
-                    <div class="form-grupo">
-                        <label>Link de Acesso:</label>
-                        <input type="text" id="div-link" value="#">
-                    </div>
-                    <div class="form-grupo">
-                        <label>Tipo:</label>
-                        <select id="div-tipo">
-                            <option value="Informativa">Informativa</option>
-                            <option value="Divisional">Divisional</option>
-                        </select>
-                    </div>
-                    <div class="form-grupo form-grupo-check">
-                        <input type="checkbox" id="div-verificado">
-                        <label for="div-verificado">Homologado/Verificado pelo CJS</label>
-                    </div>
-                    <button class="btn-acao" onclick="executarCriacaoDiv()">Inserir Elemento</button>
-                </div>
             </div>
         </section>
-
     </div>
 
-    <!-- SCRIPT DE PONTE QUE CHAMA O SCRIPT.JS EXTERNO -->
     <script>
         function mudarAba(idAba) {
             document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
@@ -536,11 +365,7 @@
             const abaAlvo = document.getElementById(`aba-${idAba}`);
             if(abaAlvo) abaAlvo.classList.add('active');
             
-            // Procura o botão pelo onclick correspondente para ativar visualmente
-            const botoes = document.querySelectorAll('.btn-nav');
-            botoes.forEach(b => {
-                if(b.getAttribute('onclick').includes(idAba)) b.classList.add('active');
-            });
+            event.currentTarget.classList.add('active');
         }
 
         function executarPost() {
@@ -549,195 +374,17 @@
             const conteudo = document.getElementById('post-conteudo').value;
             const importante = document.getElementById('post-importante').checked;
 
-            if(titulo && conteudo) {
+            if(typeof publicarEmbed === 'function') {
                 publicarEmbed(mural, titulo, conteudo, importante);
                 document.getElementById('post-titulo').value = '';
                 document.getElementById('post-conteudo').value = '';
                 document.getElementById('post-importante').checked = false;
-                alert("Comunicado enviado aos Murais com Sucesso!");
+                alert("Publicado com sucesso! Vá na aba Murais para ver.");
             } else {
-                alert("Por favor, preencha o Título e o Conteúdo.");
-            }
-        }
-
-        function ejecutarCriacaoDiv() {
-            const nome = document.getElementById('div-nome').value;
-            const link = document.getElementById('div-link').value;
-            const tipo = document.getElementById('div-tipo').value;
-            const verificado = document.getElementById('div-verificado').checked;
-
-            if(nome) {
-                criarNovaDivisao(nome, link, tipo, verificado);
-                document.getElementById('div-nome').value = '';
-                document.getElementById('div-link').value = '#';
-                document.getElementById('div-verificado').checked = false;
-                alert("Nova divisão adicionada ao Hub!");
-            } else {
-                alert("Preencha o nome do Órgão.");
+                alert("Erro: O arquivo script.js ainda não carregou totalmente.");
             }
         }
     </script>
-    
-    <!-- CONEXÃO COM O ARQUIVO DE INTELIGÊNCIA INTERNA -->
     <script src="https://walysonfelipenascimento-gif.github.io/Script.js/script.js"></script>
-</body>
-</html>
-            0% { box-shadow: 0 0 5px rgba(255, 204, 0, 0.2); border-color: #c5a059; }
-            100% { box-shadow: 0 0 20px rgba(255, 204, 0, 0.6); border-color: #fff1b0; }
-        }
-
-        /* --- CARDS DE DIVISÕES VERIFICADAS --- */
-        .card-divisao { background: #1f2833; padding: 20px; border-radius: 6px; margin-bottom: 15px; }
-        .servidor-verificado {
-            border: 2px solid transparent;
-            background-image: linear-gradient(#1f2833, #1f2833), linear-gradient(135deg, #c5a059, #ffea9f, #c5a059);
-            background-origin: border-box; background-clip: padding-box, border-box;
-        }
-        .badge-verificado { background-color: #c5a059; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 3px; margin-left: 10px; }
-
-        /* TABELAS E FORMULÁRIOS */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1f2833; }
-        th { background-color: #1f2833; color: #c5a059; }
-        .form-grupo { margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px; }
-        input, select, textarea { padding: 10px; background: #1e1f22; border: 1px solid #1f2833; color: #fff; border-radius: 4px; }
-        button.btn-acao { background-color: #c5a059; color: #000; font-weight: bold; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-        
-        /* SISTEMA DE PROCESSO STS */
-        .item-processo { background: #1e1f22; padding: 15px; border-radius: 4px; border-left: 4px solid #e74c3c; margin-bottom: 15px; }
-        .proc-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .proc-id { color: #e74c3c; font-weight: bold; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo">CJS // SISTEMA OPERACIONAL</div>
-        <nav>
-            <button id="nav-p-mural" onclick="mudarAba('p-mural')">Murais</button>
-            <button id="nav-p-divisoes" onclick="mudarAba('p-divisoes')">Divisões</button>
-            <button id="nav-p-logistica" onclick="mudarAba('p-logistica')">Logística</button>
-            <button id="nav-p-doj" onclick="mudarAba('p-doj')">D.O.J.</button>
-            <button id="nav-p-sts" onclick="mudarAba('p-sts')">S.T.S.</button>
-            <button id="nav-p-config" onclick="mudarAba('p-config')">Configurações</button>
-        </nav>
-    </header>
-
-    <!-- PÁGINA 1: MURAIS -->
-    <div id="p-mural" class="container active-tab">
-        <h2>Mural Supremo CJS</h2>
-        <div id="muralCJS"></div>
-        
-        <h2>Mural das Forças Operacionais</h2>
-        <div id="muralMilitar"></div>
-    </div>
-
-    <!-- PÁGINA 2: DIVISÕES -->
-    <div id="p-divisoes" class="container">
-        <h2>Hub de Órgãos Integrados</h2>
-        <div id="hub-divisoes"></div>
-    </div>
-
-    <!-- PÁGINA 3: LOGÍSTICA -->
-    <div id="p-logistica" class="container">
-        <h2>Ações em Instituição & Logística</h2>
-        <p>Painel de monitoramento de rondas de segurança e relatórios táticos em desenvolvimento.</p>
-    </div>
-
-    <!-- PÁGINA 4: D.O.J -->
-    <div id="p-doj" class="container">
-        <h2>Diário Oficial de Julgamentos (D.O.J.)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Ato Administrativo</th>
-                    <th>Classificação</th>
-                    <th>Oficial Responsável</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-cargos">
-                <!-- Puxado pelo Script -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- PÁGINA 5: S.T.S -->
-    <div id="p-sts" class="container">
-        <h2>Superior Tribunal Supremo (S.T.S.)</h2>
-        <div id="painel-processos"></div>
-    </div>
-
-    <!-- PÁGINA 6: CONFIGURAÇÕES (PAINEL ADMINISTRATIVO) -->
-    <div id="p-config" class="container">
-        <h2>Painel de Controle e Ferramentas "+"</h2>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-            <div>
-                <h3>Postar Comunicado (Embed)</h3>
-                <div class="form-grupo">
-                    <label>Alvo:</label>
-                    <select id="post-mural"><option value="muralCJS">Mural CJS</option><option value="muralMilitar">Mural Operacional</option></select>
-                </div>
-                <div class="form-grupo">
-                    <label>Título:</label>
-                    <input type="text" id="post-titulo">
-                </div>
-                <div class="form-grupo">
-                    <label>Conteúdo:</label>
-                    <textarea id="post-conteudo" rows="3"></textarea>
-                </div>
-                <div class="form-grupo" style="flex-direction: row; align-items: center;">
-                    <input type="checkbox" id="post-importante"> <label>Extremamente Importante (Dourado Brilhante)</label>
-                </div>
-                <button class="btn-acao" onclick="executarPost()">Publicar Embed</button>
-            </div>
-
-            <div>
-                <h3>Adicionar Nova Divisão/Servidor (+)</h3>
-                <div class="form-grupo">
-                    <label>Nome do Órgão:</label>
-                    <input type="text" id="div-nome">
-                </div>
-                <div class="form-grupo">
-                    <label>Link de Acesso:</label>
-                    <input type="text" id="div-link" value="#">
-                </div>
-                <div class="form-grupo">
-                    <label>Tipo:</label>
-                    <select id="div-tipo"><option value="Informativa">Informativa</option><option value="Divisional">Divisional</option></select>
-                </div>
-                <div class="form-grupo" style="flex-direction: row; align-items: center;">
-                    <input type="checkbox" id="div-verificado"> <label>Homologado/Verificado pelo CJS</label>
-                </div>
-                <button class="btn-acao" onclick="ejecutarCriacaoDiv()">Inserir Elemento</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-    <script>
-        // Função auxiliar para mudar as abas visíveis na tela
-        function mudarAba(idAba) {
-            document.querySelectorAll('.container').forEach(c => c.classList.remove('active-tab'));
-            document.getElementById(idAba).classList.add('active-tab');
-        }
-        // Funções de ponte para o arquivo script.js
-        function ejecutarPost() {
-            publicarEmbed(
-                document.getElementById('post-mural').value,
-                document.getElementById('post-titulo').value,
-                document.getElementById('post-conteudo').value,
-                document.getElementById('post-importante').checked
-            );
-        }
-        function ejecutarCriacaoDiv() {
-            criarNovaDivisao(
-                document.getElementById('div-nome').value,
-                document.getElementById('div-link').value,
-                document.getElementById('div-tipo').value,
-                document.getElementById('div-verificado').checked
-            );
-        }
-    </script>
 </body>
 </html>
