@@ -5,35 +5,583 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.O.G. | Comando Jurídico Supremo</title>
     <style>
-        /* --- ESTILOS INTERNOS E IDENTIDADE VISUAL --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0b0c10; color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        header { background-color: #1f2833; border-bottom: 2px solid #c5a059; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 22px; font-weight: bold; color: #c5a059; letter-spacing: 2px; }
-        
-        nav { display: flex; gap: 15px; }
-        nav button { background: none; border: none; color: #fff; font-weight: 600; cursor: pointer; padding: 5px 10px; transition: 0.3s; }
-        nav button:hover { color: #c5a059; }
-
-        .container { flex: 1; padding: 30px; max-width: 1200px; margin: 0 auto; w-index: 100%; display: none; }
-        .active-tab { display: block; }
-
-        h2 { color: #c5a059; margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid #1f2833; padding-bottom: 10px; }
-        
-        /* --- ESTILO DOS EMBEDS (ESTILO DISCORD) --- */
-        .discord-embed { background-color: #1e1f22; border-radius: 4px; padding: 16px; margin-bottom: 15px; border-left: 4px solid #c5a059; text-align: left; }
-        .embed-title { color: #ffffff; font-size: 1.1rem; margin-bottom: 6px; }
-        .embed-description { color: #dbdee1; font-size: 0.95rem; margin-bottom: 10px; }
-        .embed-footer { color: #949ba4; font-size: 0.75rem; }
-
-        /* --- ANIMAÇÃO DOURADA BRILHANTE (EXTREMAMENTE IMPORTANTE) --- */
-        .embed-dourado-brilhante {
-            border-left: 5px solid #ffcc00;
-            background: linear-gradient(135deg, #1e1f22 70%, #2b2308 100%);
-            animation: pulsarBrilhoDourado 2.5s infinite alternate;
+        :root {
+            --bg-principal: #0d1117;
+            --bg-card: #161b22;
+            --dourado: #c5a059;
+            --dourado-brilho: #ffdfa9;
+            --texto: #c9d1d9;
+            --texto-claro: #f0f6fc;
+            --borda: #30363d;
         }
-        @keyframes pulsarBrilhoDourado {
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--texto);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* BARRA SUPERIOR DE NAVEGAÇÃO */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 2px solid var(--dourado);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area h1 {
+            color: var(--dourado);
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 5px;
+            max-width: 70%;
+        }
+
+        nav::-webkit-scrollbar {
+            height: 4px;
+        }
+        nav::-webkit-scrollbar-thumb {
+            background: var(--dourado);
+            border-radius: 10px;
+        }
+
+        .btn-nav {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--texto);
+            padding: 8px 14px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+
+        .btn-nav:hover, .btn-nav.active {
+            border-color: var(--dourado);
+            color: var(--dourado);
+            background-color: rgba(197, 160, 89, 0.05);
+        }
+
+        /* RECIPIENTES DE PÁGINAS */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .pagina {
+            display: none;
+        }
+
+        .pagina.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--dourado);
+            border-bottom: 1px solid var(--borda);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        /* EMBEDS ESTILO DISCORD */
+        .mural-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .discord-embed {
+            background-color: var(--bg-card);
+            border: 1px solid var(--borda);
+            border-radius: 4px;
+            padding: 15px;
+            position: relative;
+        }
+
+        .embed-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .embed-title {
+            color: var(--texto-claro);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .embed-description {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .embed-footer {
+            font-size: 0.75rem;
+            color: #8b949e;
+            margin-top: 5px;
+        }
+
+        /* EFEITO EXTRA: DOURADO BRILHANTE ANIMADO */
+        .embed-dourado-brillante {
+            border-left: 4px solid var(--dourado);
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
+            animation: pulsoDourado 2s infinite alternate;
+        }
+
+        @keyframes pulsoDourado {
+            from { border-left-color: var(--dourado); box-shadow: 0 0 10px rgba(197, 160, 89, 0.2); }
+            to { border-left-color: var(--dourado-brilho); box-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
+        }
+
+        /* GRID DO HUB DE DIVISÕES */
+        .grid-divisoes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card-divisao {
+            background-color: var(--bg-card);
+            border: 1px solid var(--borda);
+            border-radius: 6px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: 0.3s;
+        }
+
+        .card-divisao:hover {
+            transform: translateY(-3px);
+            border-color: var(--dourado);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-header h4 {
+            color: var(--texto-claro);
+            font-size: 1.1rem;
+        }
+
+        .badge-verificado {
+            background-color: rgba(197, 160, 89, 0.15);
+            color: var(--dourado);
+            border: 1px solid var(--dourado);
+            font-size: 0.65rem;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .servidor-verificado {
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.1);
+        }
+
+        .btn-acesso {
+            display: inline-block;
+            background-color: var(--dourado);
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: auto;
+            transition: 0.2s;
+        }
+
+        .btn-acesso:hover {
+            background-color: var(--dourado-brilho);
+        }
+
+        /* TABELAS (LOGÍSTICA / CARGOS) */
+        .table-container {
+            overflow-x: auto;
+            background-color: var(--bg-card);
+            border: 1px solid var(--borda);
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--borda);
+        }
+
+        th {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--dourado);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .nome-ocupante {
+            color: var(--texto-claro);
+            font-weight: 600;
+        }
+
+        .btn-editar {
+            background: transparent;
+            border: 1px solid var(--borda);
+            color: var(--texto);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .btn-editar:hover {
+            border-color: var(--dourado);
+            color: var(--dourado);
+        }
+
+        /* SUPREMO TRIBUNAL (STS) */
+        .painel-sts {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .item-processo {
+            background-color: var(--bg-card);
+            border: 1px solid var(--borda);
+            border-left: 4px solid #da373c; /* Vermelho Tribunal */
+            border-radius: 4px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .proc-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+        }
+
+        .proc-id {
+            color: var(--dourado);
+        }
+
+        .proc-status {
+            font-size: 0.8rem;
+            background-color: rgba(218, 55, 60, 0.1);
+            color: #da373c;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* PAINEL ADMINISTRATIVO / FORMULÁRIOS */
+        .grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .secao-form {
+            background-color: var(--bg-card);
+            border: 1px solid var(--borda);
+            border-radius: 6px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .secao-form h3 {
+            color: var(--texto-claro);
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--borda);
+            padding-bottom: 5px;
+        }
+
+        .form-grupo {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-grupo label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .form-grupo input, .form-grupo textarea, .form-grupo select {
+            background-color: var(--bg-principal);
+            border: 1px solid var(--borda);
+            color: var(--texto-claro);
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .form-grupo input:focus, .form-grupo textarea:focus, .form-grupo select:focus {
+            border-color: var(--dourado);
+        }
+
+        .form-grupo-check {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .form-grupo-check input {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-acao {
+            background-color: var(--dourado);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-acao:hover {
+            background-color: var(--dourado-brilho);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>CJS // SISTEMA OPERACIONAL</h1>
+        </div>
+        <nav>
+            <button class="btn-nav active" onclick="mudarAba('mural')">Murais</button>
+            <button class="btn-nav" id="nav-p-divisoes" onclick="mudarAba('divisoes')">Divisões</button>
+            <button class="btn-nav" id="nav-p-logistica" onclick="mudarAba('logistica')">Logística</button>
+            <button class="btn-nav" id="nav-p-doj" onclick="mudarAba('doj')">D.O.J.</button>
+            <button class="btn-nav" id="nav-p-sts" onclick="mudarAba('sts')">S.T.S.</button>
+            <button class="btn-nav admin-only" id="nav-p-config" onclick="mudarAba('admin')">Configurações</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <!-- ABA 1: MURAIS -->
+        <section id="aba-mural" class="pagina active">
+            <h2>MURAL SUPREMO CJS</h2>
+            <div id="muralCJS" class="mural-container"></div>
+            
+            <h2 style="margin-top: 40px;">MURAL DAS FORÇAS OPERACIONAIS</h2>
+            <div id="muralMilitar" class="mural-container"></div>
+        </section>
+
+        <!-- ABA 2: DIVISÕES -->
+        <section id="aba-divisoes" class="pagina">
+            <h2>HUB DE DIVISÕES E JURISDIÇÕES</h2>
+            <div id="hub-divisoes" class="grid-divisoes"></div>
+        </section>
+
+        <!-- ABA 3: LOGÍSTICA / CARGOS -->
+        <section id="aba-logistica" class="pagina">
+            <h2>QUADRO DE CARGOS E OFICIAIS</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cargo / Função</th>
+                            <th>Nível Hierárquico</th>
+                            <th>Oficial Designado</th>
+                            <th class="admin-only">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-cargos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ABA 4: DIÁRIO OFICIAL -->
+        <section id="aba-doj" class="pagina">
+            <h2>DIÁRIO OFICIAL DA JUSTIÇA (D.O.J.)</h2>
+            <div class="discord-embed" style="border-left: 4px solid #4f545c;">
+                <div class="embed-content">
+                    <h3 class="embed-title">📜 Repositório de Atas e Decretos</h3>
+                    <p class="embed-description">Todas as resoluções da corte, nomeações de magistrados e sanções institucionais permanentes ficam arquivadas publicamente nesta seção para fins de transparência constitucional.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABA 5: SUPERIOR TRIBUNAL (STS) -->
+        <section id="aba-sts" class="pagina">
+            <h2>SUPERIOR TRIBUNAL SUPREMO (S.T.S.)</h2>
+            <div class="painel-sts" id="painel-processos"></div>
+        </section>
+
+        <!-- ABA 6: PAINEL ADMINISTRATIVO -->
+        <section id="aba-admin" class="pagina">
+            <h2>PAINEL DE CONTROLE E FERRAMENTAS "+"</h2>
+            
+            <div class="grid-admin">
+                <!-- FORMULÁRIO 1: EMBEDS -->
+                <div class="secao-form">
+                    <h3>Postar Comunicado (Embed)</h3>
+                    <div class="form-grupo">
+                        <label>Alvo:</label>
+                        <select id="post-mural">
+                            <option value="muralCJS">Mural CJS</option>
+                            <option value="muralMilitar">Mural Militar</option>
+                        </select>
+                    </div>
+                    <div class="form-grupo">
+                        <label>Título:</label>
+                        <input type="text" id="post-titulo" placeholder="Ex: [DIRETRIZ] Nova Ordem...">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Conteúdo:</label>
+                        <textarea id="post-conteudo" rows="4" placeholder="Digite a mensagem oficial aqui..."></textarea>
+                    </div>
+                    <div class="form-grupo form-grupo-check">
+                        <input type="checkbox" id="post-importante">
+                        <label for="post-importante">Extremamente Importante (Dourado Brilhante)</label>
+                    </div>
+                    <button class="btn-acao" onclick="executarPost()">Publicar Embed</button>
+                </div>
+
+                <!-- FORMULÁRIO 2: CRIAR DIVISÃO -->
+                <div class="secao-form">
+                    <h3>Adicionar Nova Divisão/Servidor (+)</h3>
+                    <div class="form-grupo">
+                        <label>Nome do Órgão:</label>
+                        <input type="text" id="div-nome" placeholder="Ex: Diretoria de Operações">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Link de Acesso:</label>
+                        <input type="text" id="div-link" value="#">
+                    </div>
+                    <div class="form-grupo">
+                        <label>Tipo:</label>
+                        <select id="div-tipo">
+                            <option value="Informativa">Informativa</option>
+                            <option value="Divisional">Divisional</option>
+                        </select>
+                    </div>
+                    <div class="form-grupo form-grupo-check">
+                        <input type="checkbox" id="div-verificado">
+                        <label for="div-verificado">Homologado/Verificado pelo CJS</label>
+                    </div>
+                    <button class="btn-acao" onclick="executarCriacaoDiv()">Inserir Elemento</button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- SCRIPT DE PONTE QUE CHAMA O SCRIPT.JS EXTERNO -->
+    <script>
+        function mudarAba(idAba) {
+            document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+            
+            const abaAlvo = document.getElementById(`aba-${idAba}`);
+            if(abaAlvo) abaAlvo.classList.add('active');
+            
+            // Procura o botão pelo onclick correspondente para ativar visualmente
+            const botoes = document.querySelectorAll('.btn-nav');
+            botoes.forEach(b => {
+                if(b.getAttribute('onclick').includes(idAba)) b.classList.add('active');
+            });
+        }
+
+        function executarPost() {
+            const mural = document.getElementById('post-mural').value;
+            const titulo = document.getElementById('post-titulo').value;
+            const conteudo = document.getElementById('post-conteudo').value;
+            const importante = document.getElementById('post-importante').checked;
+
+            if(titulo && conteudo) {
+                publicarEmbed(mural, titulo, conteudo, importante);
+                document.getElementById('post-titulo').value = '';
+                document.getElementById('post-conteudo').value = '';
+                document.getElementById('post-importante').checked = false;
+                alert("Comunicado enviado aos Murais com Sucesso!");
+            } else {
+                alert("Por favor, preencha o Título e o Conteúdo.");
+            }
+        }
+
+        function ejecutarCriacaoDiv() {
+            const nome = document.getElementById('div-nome').value;
+            const link = document.getElementById('div-link').value;
+            const tipo = document.getElementById('div-tipo').value;
+            const verificado = document.getElementById('div-verificado').checked;
+
+            if(nome) {
+                criarNovaDivisao(nome, link, tipo, verificado);
+                document.getElementById('div-nome').value = '';
+                document.getElementById('div-link').value = '#';
+                document.getElementById('div-verificado').checked = false;
+                alert("Nova divisão adicionada ao Hub!");
+            } else {
+                alert("Preencha o nome do Órgão.");
+            }
+        }
+    </script>
+    
+    <!-- CONEXÃO COM O ARQUIVO DE INTELIGÊNCIA INTERNA -->
+    <script src="https://walysonfelipenascimento-gif.github.io/Script.js/script.js"></script>
+</body>
+</html>
             0% { box-shadow: 0 0 5px rgba(255, 204, 0, 0.2); border-color: #c5a059; }
             100% { box-shadow: 0 0 20px rgba(255, 204, 0, 0.6); border-color: #fff1b0; }
         }
