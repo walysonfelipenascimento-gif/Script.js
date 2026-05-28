@@ -13,6 +13,12 @@
             --texto: #c9d1d9;
             --texto-claro: #f0f6fc;
             --borda: #30363d;
+            
+            /* Cores dos Cargos/Tribunais Estilo Discord */
+            --cor-cjsu: #f1c40f;
+            --cor-stf: #e67e22;
+            --cor-stj: #3498db;
+            --cor-stm: #9b59b6;
         }
 
         * {
@@ -60,13 +66,8 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        nav::-webkit-scrollbar {
-            height: 4px;
-        }
-        nav::-webkit-scrollbar-thumb {
-            background: var(--dourado);
-            border-radius: 10px;
-        }
+        nav::-webkit-scrollbar { height: 4px; }
+        nav::-webkit-scrollbar-thumb { background: var(--dourado); border-radius: 10px; }
 
         .btn-nav {
             background: transparent;
@@ -95,13 +96,8 @@
             margin: 0 auto;
         }
 
-        .pagina {
-            display: none;
-        }
-
-        .pagina.active {
-            display: block;
-        }
+        .pagina { display: none; }
+        .pagina.active { display: block; }
 
         h2 {
             color: var(--dourado);
@@ -112,110 +108,105 @@
             letter-spacing: 1px;
         }
 
-        .mural-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 10px;
-            min-height: 50px;
+        /* 📰 JORNAL (D.O.J) */
+        .jornal-container { display: flex; flex-direction: column; gap: 20px; }
+        .jornal-item {
+            background-color: #fff;
+            color: #111;
+            padding: 20px;
+            border-radius: 3px;
+            box-shadow: 3px 3px 0px var(--dourado);
+            border: 1px solid #ddd;
         }
+        .jornal-header { text-align: center; border-bottom: 2px double #111; padding-bottom: 10px; margin-bottom: 15px; }
+        .jornal-header h3 { font-family: 'Times New Roman', Times, serif; font-size: 1.5rem; text-transform: uppercase; }
+        .jornal-meta { font-size: 0.75rem; text-transform: uppercase; font-weight: bold; color: #555; display: flex; justify-content: space-between; margin-top: 5px; }
+        .jornal-corpo { font-family: 'Times New Roman', Times, serif; font-size: 1.05rem; line-height: 1.4; text-align: justify; white-space: pre-wrap; }
 
-        .discord-embed {
-            background-color: var(--bg-card);
-            border: 1px solid var(--borda);
-            border-radius: 4px;
-            padding: 15px;
-            position: relative;
-        }
-
-        .embed-content {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .embed-title {
-            color: var(--texto-claro);
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .embed-description {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            white-space: pre-wrap;
-        }
-
-        .embed-dourado-brillante {
-            border-left: 4px solid var(--dourado);
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
-            animation: pulsoDourado 2s infinite alternate;
-        }
-
-        @keyframes pulsoDourado {
-            from { border-left-color: var(--dourado); box-shadow: 0 0 10px rgba(197, 160, 89, 0.2); }
-            to { border-left-color: var(--dourado-brilho); box-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
-        }
-
-        .grid-divisoes {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-        }
-
-        .card-divisao {
+        /* 📜 DIRETRiZES */
+        .diretriz-lista { display: flex; flex-direction: column; gap: 15px; }
+        .diretriz-card {
             background-color: var(--bg-card);
             border: 1px solid var(--borda);
             border-radius: 6px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            padding: 18px;
         }
+        .diretriz-titulo { color: var(--texto-claro); font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .diretriz-texto { font-size: 0.95rem; line-height: 1.5; color: var(--texto); white-space: pre-wrap; }
 
-        .btn-acesso {
-            display: block;
-            background-color: var(--dourado);
-            color: #000;
-            text-align: center;
-            padding: 8px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin-top: auto;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            background-color: var(--bg-card);
+        /* 💬 SELETOR DE CARGOS ESTILO DISCORD */
+        .discord-roles-box {
+            background-color: #1e1f22;
             border: 1px solid var(--borda);
-            border-radius: 6px;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
+        .discord-roles-box p { font-size: 0.85rem; font-weight: bold; color: #b5bac1; text-transform: uppercase; margin-bottom: 10px; }
+        .roles-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .role-pill {
+            background-color: #2b2d31;
+            border: 1px solid transparent;
+            color: #dbdee1;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
         }
+        .role-pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        
+        .role-stm::before { background-color: var(--cor-stm); }
+        .role-stj::before { background-color: var(--cor-stj); }
+        .role-stf::before { background-color: var(--cor-stf); }
+        .role-cjsu::before { background-color: var(--cor-cjsu); }
 
-        th, td {
-            padding: 10px 12px;
+        .role-pill.active { background-color: #35373c; }
+        .role-stm.active { border-color: var(--cor-stm); color: var(--cor-stm); }
+        .role-stj.active { border-color: var(--cor-stj); color: var(--cor-stj); }
+        .role-stf.active { border-color: var(--cor-stf); color: var(--cor-stf); }
+        .role-cjsu.active { border-color: var(--cor-cjsu); color: var(--cor-cjsu); }
+
+        /* 🔒 TICKETS DE PROCESSO (S.T.S) */
+        .ticket-lista { display: flex; flex-direction: column; gap: 12px; }
+        .ticket-card {
+            background-color: #1e1f22;
+            border-left: 4px solid var(--borda);
+            border-top: 1px solid var(--borda);
+            border-right: 1px solid var(--borda);
             border-bottom: 1px solid var(--borda);
+            padding: 15px;
+            border-radius: 4px;
         }
+        .ticket-card.t-STM { border-left-color: var(--cor-stm); }
+        .ticket-card.t-STJ { border-left-color: var(--cor-stj); }
+        .ticket-card.t-STF { border-left-color: var(--cor-stf); }
+        .ticket-card.t-CJSu { border-left-color: var(--cor-cjsu); }
 
-        th {
-            background-color: rgba(0, 0, 0, 0.2);
-            color: var(--dourado);
+        .ticket-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .ticket-id { font-weight: bold; font-size: 0.9rem; color: #fff; }
+        
+        .badge-discord {
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: rgba(0,0,0,0.3);
         }
+        .t-STM .badge-discord { color: var(--cor-stm); }
+        .t-STJ .badge-discord { color: var(--cor-stj); }
+        .t-STF .badge-discord { color: var(--cor-stf); }
+        .t-CJSu .badge-discord { color: var(--cor-cjsu); }
 
-        .grid-admin {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        .ticket-motivo { font-size: 0.95rem; margin-bottom: 12px; line-height: 1.4; color: #dbdee1; }
+        .ticket-footer { font-size: 0.75rem; color: #949ba4; display: flex; justify-content: space-between; }
 
+        /* ⚙️ CONTROLE */
+        .grid-admin { display: flex; flex-direction: column; gap: 25px; }
         .secao-form {
             background-color: var(--bg-card);
             border: 1px solid var(--borda);
@@ -225,13 +216,7 @@
             flex-direction: column;
             gap: 12px;
         }
-
-        .form-grupo {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
+        .form-grupo { display: flex; flex-direction: column; gap: 5px; }
         .form-grupo input, .form-grupo textarea, .form-grupo select {
             background-color: var(--bg-principal);
             border: 1px solid var(--borda);
@@ -240,13 +225,6 @@
             border-radius: 4px;
             font-size: 0.9rem;
         }
-
-        .form-grupo-check {
-            flex-direction: row;
-            align-items: center;
-            gap: 8px;
-        }
-
         .btn-acao {
             background-color: var(--dourado);
             color: #000;
@@ -266,11 +244,10 @@
         </div>
         <nav>
             <button class="btn-nav active" onclick="mudarAba('mural')">Murais</button>
-            <button class="btn-nav" onclick="mudarAba('divisoes')">Divisões</button>
-            <button class="btn-nav" onclick="mudarAba('logistica')">Logística</button>
             <button class="btn-nav" onclick="mudarAba('doj')">D.O.J.</button>
             <button class="btn-nav" onclick="mudarAba('sts')">S.T.S.</button>
-            <button class="btn-nav" onclick="mudarAba('admin')">Configurações</button>
+            <button class="btn-nav" onclick="mudarAba('diretrizes')">Diretrizes</button>
+            <button class="btn-nav" onclick="mudarAba('admin')">Painel de Controle</button>
         </nav>
     </header>
 
@@ -279,112 +256,210 @@
         <!-- MURAIS -->
         <section id="aba-mural" class="pagina active">
             <h2>MURAL SUPREMO CJS</h2>
-            <div id="muralCJS" class="mural-container"></div>
-            
-            <h2 style="margin-top: 30px;">MURAL DAS FORÇAS OPERACIONAIS</h2>
-            <div id="muralMilitar" class="mural-container"></div>
-        </section>
-
-        <!-- DIVISÕES -->
-        <section id="aba-divisoes" class="pagina">
-            <h2>HUB DE ÓRGÃOS INTEGRADOS</h2>
-            <div id="hub-divisoes" class="grid-divisoes"></div>
-        </section>
-
-        <!-- LOGÍSTICA -->
-        <section id="aba-logistica" class="pagina">
-            <h2>AÇÕES EM INSTITUIÇÃO & LOGÍSTICA</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Cargo / Função</th>
-                            <th>Nível</th>
-                            <th>Oficial Designado</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabela-cargos"></tbody>
-                </table>
+            <div id="muralCJS" class="mural-container">
+                <p style="color:#8b949e; font-size:0.9rem;">Nenhum comunicado fixado no momento.</p>
             </div>
         </section>
 
-        <!-- D.O.J -->
+        <!-- D.O.J (JORNAL OFICIAL) -->
         <section id="aba-doj" class="pagina">
             <h2>DIÁRIO OFICIAL DE JULGAMENTOS (D.O.J.)</h2>
-            <div class="discord-embed">
-                <div class="embed-content">
-                    <h3 class="embed-title">📜 Atas e Decretos</h3>
-                    <p class="embed-description">Painel de monitoramento de rondas de segurança e relatórios táticos em desenvolvimento.</p>
-                </div>
-            </div>
+            <div id="jornal-conteudo" class="jornal-container"></div>
         </section>
 
-        <!-- S.T.S -->
+        <!-- S.T.S (TRIBUNAIS / TICKETS) -->
         <section id="aba-sts" class="pagina">
             <h2>SUPERIOR TRIBUNAL SUPREMO (S.T.S.)</h2>
-            <div id="painel-processos" class="mural-container"></div>
+            
+            <!-- Interface de Cargos Simulando Discord -->
+            <div class="discord-roles-box">
+                <p>Clique para atribuir seu Cargo Jurídico:</p>
+                <div class="roles-container">
+                    <button class="role-pill role-stm" onclick="selecionarCargoDiscord('STM')">STM</button>
+                    <button class="role-pill role-stj" onclick="selecionarCargoDiscord('STJ')">STJ</button>
+                    <button class="role-pill role-stf" onclick="selecionarCargoDiscord('STF')">STF</button>
+                    <button class="role-pill role-cjsu active" onclick="selecionarCargoDiscord('CJSu')">CJSu</button>
+                </div>
+            </div>
+
+            <div id="lista-tickets" class="ticket-lista"></div>
         </section>
 
-        <!-- PAINEL ADMIN -->
+        <!-- DIRETRIZES -->
+        <section id="aba-diretrizes" class="pagina">
+            <h2>DIRETRIZES INSTITUCIONAIS & CÓDIGOS</h2>
+            <div id="diretriz-conteudo" class="diretriz-lista"></div>
+        </section>
+
+        <!-- PAINEL DE CONTROLE (POSTAGEM DINÂMICA) -->
         <section id="aba-admin" class="pagina">
-            <h2>PAINEL DE CONTROLE E FERRAMENTAS "+"</h2>
+            <h2>CENTRAL DE EMISSÃO DE CONTEÚDO</h2>
             
             <div class="grid-admin">
+                <!-- Postar no Jornal (D.O.J) -->
                 <div class="secao-form">
-                    <h3>Postar Comunicado (Embed)</h3>
+                    <h3>📰 Publicar Matéria / Artigo (D.O.J.)</h3>
+                    <div class="form-grupo"><label>Título da Manchete:</label><input type="text" id="jornal-titulo" placeholder="Ex: ACÓRDÃO UNÂNIME N° 12"></div>
+                    <div class="form-grupo"><label>Autor / Relator:</label><input type="text" id="jornal-autor" placeholder="Ex: Ministro Walyson"></div>
+                    <div class="form-grupo"><label>Texto do Artigo:</label><textarea id="jornal-texto" rows="3" placeholder="Escreva os fatos ou decisões jurídicas aqui..."></textarea></div>
+                    <button class="btn-acao" onclick="postarJornal()">Publicar no Diário Oficial</button>
+                </div>
+
+                <!-- Abrir Ticket (S.T.S) -->
+                <div class="secao-form">
+                    <h3>🔒 Criar Canal de Ticket Privado (S.T.S.)</h3>
                     <div class="form-grupo">
-                        <label>Alvo:</label>
-                        <select id="post-mural">
-                            <option value="muralCJS">Mural CJS</option>
-                            <option value="muralMilitar">Mural Militar</option>
+                        <label>Destinar ao Tribunal:</label>
+                        <select id="ticket-tribunal">
+                            <option value="STM">STM - Superior Tribunal Militar</option>
+                            <option value="STJ">STJ - Superior Tribunal de Justiça</option>
+                            <option value="STF">STF - Supremo Tribunal Federal</option>
+                            <option value="CJSu">CJSu - Comando Jurídico Supremo</option>
                         </select>
                     </div>
-                    <div class="form-grupo">
-                        <label>Título:</label>
-                        <input type="text" id="post-titulo" placeholder="Digite o título...">
-                    </div>
-                    <div class="form-grupo">
-                        <label>Conteúdo:</label>
-                        <textarea id="post-conteudo" rows="4" placeholder="Digite a mensagem..."></textarea>
-                    </div>
-                    <div class="form-grupo form-grupo-check">
-                        <input type="checkbox" id="post-importante">
-                        <label for="post-importante">Extremamente Importante (Dourado)</label>
-                    </div>
-                    <button class="btn-acao" onclick="executarPost()">Publicar Embed</button>
+                    <div class="form-grupo"><label>Operador / Requerente:</label><input type="text" id="ticket-autor" placeholder="Ex: Corregedoria"></div>
+                    <div class="form-grupo"><label>Causa Confidencial:</label><textarea id="ticket-motivo" rows="2" placeholder="Insira o texto interno do processo..."></textarea></div>
+                    <button class="btn-acao" onclick="postarTicket()">Abrir Sala Restrita</button>
+                </div>
+
+                <!-- Postar Diretrizes -->
+                <div class="secao-form">
+                    <h3>📜 Adicionar Nova Diretriz / Norma</h3>
+                    <div class="form-grupo"><label>Título da Norma/Artigo:</label><input type="text" id="diretriz-titulo-input" placeholder="Ex: Art. 1º - Dos Deveres Civis"></div>
+                    <div class="form-grupo"><label>Conteúdo Regulamentar:</label><textarea id="diretriz-texto-input" rows="3" placeholder="Insira as regras, punições ou instruções obrigatórias..."></textarea></div>
+                    <button class="btn-acao" onclick="postarDiretriz()">Fixar Regulamento</button>
                 </div>
             </div>
         </section>
     </div>
 
     <script class="notranslate" translate="no">
+        // Cargo padrão ativo
+        let cargoAtivoDiscord = "CJSu";
+
+        // Banco de Dados Dinâmico LocalStorage
+        let dbJornal = JSON.parse(localStorage.getItem('db_jornal')) || [
+            { titulo: "Abertura Oficial dos Protocolos", autor: "Alto Comando", texto: "Plataforma operacional do D.O.J ativa e pronta para receber artigos judiciais criminais e civis.", data: "28/05/2026" }
+        ];
+
+        let dbTickets = JSON.parse(localStorage.getItem('db_tickets')) || [
+            { id: "0491", tribunal: "STM", autor: "Gabinete Militar", motivo: "Análise sigilosa de insubordinação tática em campo.", data: "28/05/2026" },
+            { id: "1052", tribunal: "CJSu", autor: "Conselho Supremo", motivo: "Acesso administrativo irrestrito à infraestrutura geral.", data: "28/05/2026" }
+        ];
+
+        let dbDiretrizes = JSON.parse(localStorage.getItem('db_diretrizes')) || [
+            { titulo: "Regulamento Interno Geral", texto: "É expressamente obrigatória a consulta diária do Diário Oficial de Julgamentos por todos os juízes e relatores subordinados." }
+        ];
+
         function mudarAba(idAba) {
             document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
-            
             const abaAlvo = document.getElementById(`aba-${idAba}`);
             if(abaAlvo) abaAlvo.classList.add('active');
-            
             event.currentTarget.classList.add('active');
+
+            if(idAba === 'doj') renderJornal();
+            if(idAba === 'sts') renderTickets();
+            if(idAba === 'diretrizes') renderDiretrizes();
         }
 
-        function executarPost() {
-            const mural = document.getElementById('post-mural').value;
-            const titulo = document.getElementById('post-titulo').value;
-            const conteudo = document.getElementById('post-conteudo').value;
-            const importante = document.getElementById('post-importante').checked;
+        // Sistema de Controle de Tags estilo Discord
+        function selecionarCargoDiscord(cargo) {
+            cargoAtivoDiscord = cargo;
+            document.querySelectorAll('.role-pill').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderTickets();
+        }
 
-            if(typeof publicarEmbed === 'function') {
-                publicarEmbed(mural, titulo, conteudo, importante);
-                document.getElementById('post-titulo').value = '';
-                document.getElementById('post-conteudo').value = '';
-                document.getElementById('post-importante').checked = false;
-                alert("Publicado com sucesso! Vá na aba Murais para ver.");
-            } else {
-                alert("Erro: O arquivo script.js ainda não carregou totalmente.");
-            }
+        // Funções de Publicação Automatizada
+        function postarJornal() {
+            const t = document.getElementById('jornal-titulo').value;
+            const a = document.getElementById('jornal-autor').value;
+            const tx = document.getElementById('jornal-texto').value;
+            if(!t || !a || !tx) return alert("Erro: Preencha todos os campos do jornal!");
+
+            dbJornal.unshift({ titulo: t, autor: a, texto: tx, data: "28/05/2026" });
+            localStorage.setItem('db_jornal', JSON.stringify(dbJornal));
+            alert("Sucesso: Artigo adicionado ao D.O.J!");
+            document.getElementById('jornal-titulo').value = ''; document.getElementById('jornal-autor').value = ''; document.getElementById('jornal-texto').value = '';
+        }
+
+        function postarTicket() {
+            const trib = document.getElementById('ticket-tribunal').value;
+            const aut = document.getElementById('ticket-autor').value;
+            const mot = document.getElementById('ticket-motivo').value;
+            if(!aut || !mot) return alert("Erro: Insira o autor e a causa do processo!");
+
+            dbTickets.unshift({ id: Math.floor(1000 + Math.random() * 9000), tribunal: trib, autor: aut, motivo: mot, data: "28/05/2026" });
+            localStorage.setItem('db_tickets', JSON.stringify(dbTickets));
+            alert("Sucesso: Sala de atendimento aberta no S.T.S!");
+            document.getElementById('ticket-autor').value = ''; document.getElementById('ticket-motivo').value = '';
+        }
+
+        function postarDiretriz() {
+            const t = document.getElementById('diretriz-titulo-input').value;
+            const tx = document.getElementById('diretriz-texto-input').value;
+            if(!t || !tx) return alert("Erro: Escreva o título e a norma da diretriz!");
+
+            dbDiretrizes.unshift({ titulo: t, texto: tx });
+            localStorage.setItem('db_diretrizes', JSON.stringify(dbDiretrizes));
+            alert("Sucesso: Nova norma catalogada na aba Diretrizes!");
+            document.getElementById('diretriz-titulo-input').value = ''; document.getElementById('diretriz-texto-input').value = '';
+        }
+
+        // Funções de Renderização Dinâmica na Tela
+        function renderJornal() {
+            const box = document.getElementById('jornal-conteudo');
+            box.innerHTML = '';
+            dbJornal.forEach(j => {
+                box.innerHTML += `
+                    <div class="jornal-item">
+                        <div class="jornal-header">
+                            <h3>${j.titulo}</h3>
+                            <div class="jornal-meta"><span>Relator: ${j.autor}</span><span>Data: ${j.data}</span></div>
+                        </div>
+                        <div class="jornal-corpo">${j.texto}</div>
+                    </div>`;
+            });
+        }
+
+        function renderTickets() {
+            const box = document.getElementById('lista-tickets');
+            box.innerHTML = '';
+
+            // Hierarquia: Quem está acima visualiza cumulativamente os de níveis inferiores
+            const niveis = { "STM": ["STM"], "STJ": ["STM", "STJ"], "STF": ["STM", "STJ", "STF"], "CJSu": ["STM", "STJ", "STF", "CJSu"] };
+            const canaisVisiveis = niveis[cargoAtivoDiscord] || ["STM"];
+            let contagem = 0;
+
+            dbTickets.forEach(t => {
+                if(canaisVisiveis.includes(t.tribunal)) {
+                    contagem++;
+                    box.innerHTML += `
+                        <div class="ticket-card t-${t.tribunal}">
+                            <div class="ticket-top">
+                                <span class="ticket-id">🔒 canal-privado-#${t.id}</span>
+                                <span class="badge-discord">@${t.tribunal}</span>
+                            </div>
+                            <div class="ticket-motivo">${t.motivo}</div>
+                            <div class="ticket-footer"><span>Requerido por: <b>${t.autor}</b></span><span>Data: ${t.data}</span></div>
+                        </div>`;
+                }
+            });
+            if(contagem === 0) box.innerHTML = `<p style="text-align:center; color:#949ba4; font-size:0.9rem; padding:15px;">Nenhum ticket aberto visível para o seu cargo atual.</p>`;
+        }
+
+        function renderDiretrizes() {
+            const box = document.getElementById('diretriz-conteudo');
+            box.innerHTML = '';
+            dbDiretrizes.forEach(d => {
+                box.innerHTML += `
+                    <div class="diretriz-card">
+                        <div class="diretriz-titulo">⚖️ ${d.titulo}</div>
+                        <div class="diretriz-texto">${d.texto}</div>
+                    </div>`;
+            });
         }
     </script>
-    <script src="https://walysonfelipenascimento-gif.github.io/Script.js/script.js" class="notranslate" translate="no"></script>
 </body>
 </html>
