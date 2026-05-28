@@ -6,296 +6,266 @@
     <title>S.O.G. | Comando Jurídico Supremo</title>
     <style class="notranslate" translate="no">
         :root {
-            --bg-principal: #0d1117;
-            --bg-card: #161b22;
+            --bg-principal: #090d13;
+            --bg-card: #151b23;
+            --bg-input: #0d1117;
             --dourado: #c5a059;
-            --dourado-brilho: #ffdfa9;
-            --texto: #c9d1d9;
+            --dourado-brilho: #f3d193;
+            --texto: #8b949e;
             --texto-claro: #f0f6fc;
             --borda: #30363d;
             
-            /* Cores Discord */
-            --cor-cjsu: #f1c40f;
-            --cor-stf: #e67e22;
-            --cor-stj: #3498db;
-            --cor-stm: #9b59b6;
+            /* Categorias Jornal */
+            --tag-decreto: #e74c3c;
+            --tag-ata: #2ecc71;
+            --tag-noticia: #1abc9c;
+            --tag-juris: #95a5a6;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-principal);
-            color: var(--texto);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-principal); color: var(--texto-claro); display: flex; flex-direction: column; min-height: 100vh; }
 
         header {
             background-color: var(--bg-card);
             border-bottom: 2px solid var(--dourado);
-            padding: 15px 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
-        .logo-area h1 {
-            color: var(--dourado);
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-            font-weight: 800;
-            text-align: center;
-        }
+        .logo-area { text-align: center; }
+        .logo-area h1 { color: var(--dourado); font-size: 1.15rem; letter-spacing: 1.5px; font-weight: 800; text-transform: uppercase; }
+        .logo-area subtitle { color: var(--texto); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; display: block; margin-top: 2px; }
 
-        nav {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding-bottom: 5px;
-            width: 100%;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        nav::-webkit-scrollbar { height: 4px; }
-        nav::-webkit-scrollbar-thumb { background: var(--dourado); border-radius: 10px; }
+        nav { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; width: 100%; -webkit-overflow-scrolling: touch; }
+        nav::-webkit-scrollbar { height: 3px; }
+        nav::-webkit-scrollbar-thumb { background: var(--dourado); }
 
         .btn-nav {
-            background: transparent;
-            border: 1px solid transparent;
-            color: var(--texto);
-            padding: 6px 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: 0.3s;
-            border-radius: 4px;
-            flex-shrink: 0;
+            background: rgba(255,255,255,0.02); border: 1px solid var(--borda); color: var(--texto);
+            padding: 8px 14px; cursor: pointer; font-weight: 600; font-size: 0.8rem; border-radius: 4px; flex-shrink: 0; transition: 0.2s;
         }
+        .btn-nav:hover, .btn-nav.active { border-color: var(--dourado); color: var(--dourado-brilho); background: rgba(197, 160, 89, 0.08); }
 
-        .btn-nav:hover, .btn-nav.active {
-            border-color: var(--dourado);
-            color: var(--dourado);
-            background-color: rgba(197, 160, 89, 0.05);
-        }
-
-        .container {
-            flex: 1;
-            padding: 15px;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
+        .container { flex: 1; padding: 15px; max-width: 800px; width: 100%; margin: 0 auto; }
         .pagina { display: none; }
-        .pagina.active { display: block; }
+        .pagina.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        h2 {
-            color: var(--dourado);
-            border-bottom: 1px solid var(--borda);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
+        h2 { color: var(--dourado); font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; padding-bottom: 6px; border-bottom: 1px solid var(--borda); display: flex; justify-content: space-between; align-items: center; }
+        .contador-badge { font-size: 0.75rem; background: var(--borda); color: var(--texto); padding: 2px 8px; border-radius: 10px; }
+
+        /* 📋 SEÇÃO MURAL */
+        .mural-container { display: flex; flex-direction: column; gap: 12px; }
+        .discord-embed { background: var(--bg-card); border: 1px solid var(--borda); border-left: 4px solid #5865f2; border-radius: 4px; padding: 15px; position: relative; }
+        .embed-title { font-size: 1rem; font-weight: 700; color: var(--texto-claro); margin-bottom: 6px; }
+        .embed-desc { font-size: 0.9rem; color: #dbdee1; white-space: pre-wrap; line-height: 1.4; }
+        .embed-dourado { border-left-color: var(--dourado); box-shadow: 0 0 15px rgba(197,160,89,0.1); }
+        
+        /* 📰 SEÇÃO JORNAL (D.O.J) */
+        .jornal-container { display: flex; flex-direction: column; gap: 16px; }
+        .jornal-card { background: #f8f9fa; color: #1a1a1a; padding: 18px; border-radius: 2px; border: 1px solid #dcdcdc; box-shadow: 4px 4px 0px rgba(197,160,89,0.2); }
+        .jornal-topo { text-align: center; border-bottom: 2px double #1a1a1a; padding-bottom: 8px; margin-bottom: 12px; }
+        .jornal-topo h3 { font-family: 'Georgia', serif; font-size: 1.3rem; text-transform: uppercase; font-weight: bold; }
+        .jornal-meta { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; color: #555; text-transform: uppercase; margin-top: 4px; }
+        .jornal-corpo { font-family: 'Georgia', serif; font-size: 0.95rem; line-height: 1.5; text-align: justify; white-space: pre-wrap; }
+        .jornal-tag { display: inline-block; font-size: 0.65rem; font-weight: 800; color: #fff; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; margin-bottom: 6px; }
+
+        /* 📜 SEÇÃO LEIS / DIRETRIZES */
+        .diretriz-container { display: flex; flex-direction: column; gap: 15px; }
+        .lei-bloco { background: var(--bg-card); border: 1px solid var(--borda); border-radius: 6px; padding: 15px; }
+        .lei-header-titulo { color: var(--dourado-brilho); font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; border-bottom: 1px dashed var(--borda); padding-bottom: 5px; text-transform: uppercase; }
+        .artigo-item { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px; margin-bottom: 8px; border-left: 2px solid var(--dourado); }
+        .artigo-titulo { font-weight: 700; font-size: 0.85rem; color: var(--texto-claro); margin-bottom: 3px; }
+        .artigo-texto { font-size: 0.85rem; color: #8b949e; line-height: 1.4; white-space: pre-wrap; }
+
+        /* 🛡️ SEÇÃO DIVISÕES */
+        .divisao-grid { display: flex; flex-direction: column; gap: 12px; }
+        .divisao-card { background: var(--bg-card); border: 1px solid var(--borda); padding: 15px; border-radius: 6px; display: flex; flex-direction: column; gap: 6px; }
+        .divisao-nome { color: var(--dourado); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; }
+        .divisao-lider { font-size: 0.8rem; color: var(--texto-claro); font-weight: 600; }
+        .divisao-desc { font-size: 0.85rem; color: #8b949e; line-height: 1.4; }
+
+        /* 💬 INTERFACE DISCORD ROLES */
+        .discord-panel { background: #1e1f22; border: 1px solid var(--borda); border-radius: 8px; padding: 12px; margin-bottom: 15px; }
+        .discord-panel p { font-size: 0.7rem; font-weight: 700; color: #949ba4; text-transform: uppercase; margin-bottom: 8px; }
+        .roles-flex { display: flex; flex-wrap: wrap; gap: 6px; }
+        .role-btn {
+            background: #2b2d31; border: 1px solid transparent; color: #b5bac1; padding: 6px 12px; border-radius: 16px;
+            font-size: 0.75rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.15s;
         }
+        .role-btn::before { content: ""; width: 6px; height: 6px; border-radius: 50%; display: inline-block; background-color: attr(data-cor); }
+        .role-btn.active { background: #35373c; border-color: currentColor; }
 
-        /* 📋 MURAIS */
-        .mural-container { display: flex; flex-direction: column; gap: 15px; }
-        .discord-embed {
-            background-color: var(--bg-card);
-            border: 1px solid var(--borda);
-            border-radius: 4px;
-            padding: 15px;
-            position: relative;
+        /* 🔒 SISTEMA DE TICKETS */
+        .ticket-card { background: #1e1f22; border: 1px solid var(--borda); border-left: 4px solid var(--borda); padding: 14px; border-radius: 4px; margin-bottom: 10px; }
+        .ticket-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .ticket-id { font-weight: 700; font-size: 0.85rem; color: #fff; }
+        .ticket-badge { font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.2); text-transform: uppercase; }
+        .ticket-desc { font-size: 0.85rem; color: #dbdee1; line-height: 1.4; margin-bottom: 10px; white-space: pre-wrap; }
+        .ticket-foot { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: #949ba4; }
+        .status-select { background: #2b2d31; border: 1px solid var(--borda); color: #dbdee1; font-size: 0.65rem; padding: 2px 4px; border-radius: 3px; cursor: pointer; }
+
+        /* 🛠️ GERENCIADOR DE POSTAGENS */
+        .panel-grid { display: flex; flex-direction: column; gap: 20px; }
+        .card-form { background: var(--bg-card); border: 1px solid var(--borda); border-radius: 6px; padding: 15px; }
+        .card-form h3 { font-size: 0.95rem; color: var(--dourado-brilho); margin-bottom: 12px; text-transform: uppercase; border-bottom: 1px solid var(--borda); padding-bottom: 4px; }
+        .group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+        .group label { font-size: 0.75rem; font-weight: 600; color: var(--texto); }
+        .group input, .group textarea, .group select { background: var(--bg-input); border: 1px solid var(--borda); color: var(--texto-claro); padding: 8px; border-radius: 4px; font-size: 0.85rem; }
+        .group-row { flex-direction: row; align-items: center; gap: 6px; margin-top: 5px; }
+        .btn-post { background: var(--dourado); color: #000; border: none; padding: 9px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; cursor: pointer; width: 100%; transition: 0.2s; text-transform: uppercase; }
+        .btn-post:hover { background: var(--dourado-brilho); }
+
+        /* 🛑 MODERAÇÃO */
+        .btn-delete-master {
+            background: rgba(231, 76, 60, 0.1); border: 1px solid #e74c3c; color: #e74c3c;
+            font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; cursor: pointer; font-weight: bold;
+            transition: 0.2s; display: none; margin-top: 5px; max-width: fit-content;
         }
-        .embed-content { display: flex; flex-direction: column; gap: 8px; }
-        .embed-title { color: var(--texto-claro); font-size: 1.1rem; font-weight: 700; }
-        .embed-description { font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; }
-        .embed-dourado-brillante {
-            border-left: 4px solid var(--dourado);
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
-            animation: pulsoDourado 2s infinite alternate;
-        }
-        @keyframes pulsoDourado {
-            from { border-left-color: var(--dourado); box-shadow: 0 0 10px rgba(197, 160, 89, 0.2); }
-            to { border-left-color: var(--dourado-brilho); box-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
-        }
-
-        /* 📰 JORNAL (D.O.J) */
-        .jornal-container { display: flex; flex-direction: column; gap: 20px; }
-        .jornal-item {
-            background-color: #fff;
-            color: #111;
-            padding: 20px;
-            border-radius: 3px;
-            box-shadow: 3px 3px 0px var(--dourado);
-            border: 1px solid #ddd;
-        }
-        .jornal-header { text-align: center; border-bottom: 2px double #111; padding-bottom: 10px; margin-bottom: 15px; }
-        .jornal-header h3 { font-family: 'Times New Roman', Times, serif; font-size: 1.5rem; text-transform: uppercase; }
-        .jornal-meta { font-size: 0.75rem; text-transform: uppercase; font-weight: bold; color: #555; display: flex; justify-content: space-between; margin-top: 5px; }
-        .jornal-corpo { font-family: 'Times New Roman', Times, serif; font-size: 1.05rem; line-height: 1.4; text-align: justify; white-space: pre-wrap; }
-
-        /* 📜 DIRETRiZES */
-        .diretriz-lista { display: flex; flex-direction: column; gap: 15px; }
-        .diretriz-card { background-color: var(--bg-card); border: 1px solid var(--borda); border-radius: 6px; padding: 18px; }
-        .diretriz-titulo { color: var(--texto-claro); font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .diretriz-texto { font-size: 0.95rem; line-height: 1.5; color: var(--texto); white-space: pre-wrap; }
-
-        /* 💬 SELETOR DE CARGOS ESTILO DISCORD */
-        .discord-roles-box { background-color: #1e1f22; border: 1px solid var(--borda); border-radius: 8px; padding: 15px; margin-bottom: 20px; }
-        .discord-roles-box p { font-size: 0.85rem; font-weight: bold; color: #b5bac1; text-transform: uppercase; margin-bottom: 10px; }
-        .roles-container { display: flex; flex-wrap: wrap; gap: 8px; }
-        .role-pill {
-            background-color: #2b2d31; border: 1px solid transparent; color: #dbdee1; padding: 6px 12px; border-radius: 16px;
-            font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s;
-        }
-        .role-pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-        .role-stm::before { background-color: var(--cor-stm); }
-        .role-stj::before { background-color: var(--cor-stj); }
-        .role-stf::before { background-color: var(--cor-stf); }
-        .role-cjsu::before { background-color: var(--cor-cjsu); }
-        .role-pill.active { background-color: #35373c; }
-        .role-stm.active { border-color: var(--cor-stm); color: var(--cor-stm); }
-        .role-stj.active { border-color: var(--cor-stj); color: var(--cor-stj); }
-        .role-stf.active { border-color: var(--cor-stf); color: var(--cor-stf); }
-        .role-cjsu.active { border-color: var(--cor-cjsu); color: var(--cor-cjsu); }
-
-        /* 🔒 TICKETS (S.T.S) */
-        .ticket-lista { display: flex; flex-direction: column; gap: 12px; }
-        .ticket-card { background-color: #1e1f22; border-left: 4px solid var(--borda); border-top: 1px solid var(--borda); border-right: 1px solid var(--borda); border-bottom: 1px solid var(--borda); padding: 15px; border-radius: 4px; }
-        .ticket-card.t-STM { border-left-color: var(--cor-stm); }
-        .ticket-card.t-STJ { border-left-color: var(--cor-stj); }
-        .ticket-card.t-STF { border-left-color: var(--cor-stf); }
-        .ticket-card.t-CJSu { border-left-color: var(--cor-cjsu); }
-        .ticket-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .ticket-id { font-weight: bold; font-size: 0.9rem; color: #fff; }
-        .badge-discord { font-size: 0.75rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; background-color: rgba(0,0,0,0.3); }
-        .t-STM .badge-discord { color: var(--cor-stm); }
-        .t-STJ .badge-discord { color: var(--cor-stj); }
-        .t-STF .badge-discord { color: var(--cor-stf); }
-        .t-CJSu .badge-discord { color: var(--cor-cjsu); }
-        .ticket-motivo { font-size: 0.95rem; margin-bottom: 12px; line-height: 1.4; color: #dbdee1; white-space: pre-wrap; }
-        .ticket-footer { font-size: 0.75rem; color: #949ba4; display: flex; justify-content: space-between; }
-
-        /* ⚙️ PAINEL */
-        .grid-admin { display: flex; flex-direction: column; gap: 25px; }
-        .secao-form { background-color: var(--bg-card); border: 1px solid var(--borda); border-radius: 6px; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
-        .form-grupo { display: flex; flex-direction: column; gap: 5px; }
-        .form-grupo input, .form-grupo textarea, .form-grupo select { background-color: var(--bg-principal); border: 1px solid var(--borda); color: var(--texto-claro); padding: 10px; border-radius: 4px; font-size: 0.9rem; }
-        .form-grupo-check { flex-direction: row; align-items: center; gap: 8px; }
-        .btn-acao { background-color: var(--dourado); color: #000; border: none; padding: 10px; border-radius: 4px; font-weight: 700; cursor: pointer; }
+        .btn-delete-master:hover { background: #e74c3c; color: #fff; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo-area">
-            <h1>CJS // SISTEMA OPERACIONAL</h1>
+            <h1>Comando Jurídico Supremo</h1>
+            <subtitle>Sistema Operacional Global // S.O.G.</subtitle>
         </div>
         <nav>
-            <button class="btn-nav active" onclick="alternarAbasDoSistema('mural')">Murais</button>
-            <button class="btn-nav" onclick="alternarAbasDoSistema('doj')">D.O.J.</button>
-            <button class="btn-nav" onclick="alternarAbasDoSistema('sts')">S.T.S.</button>
-            <button class="btn-nav" onclick="alternarAbasDoSistema('diretrizes')">Diretrizes</button>
-            <button class="btn-nav" onclick="alternarAbasDoSistema('admin')">Painel de Controle</button>
+            <button class="btn-nav active" onclick="navegarAba('mural')">Murais</button>
+            <button class="btn-nav" onclick="navegarAba('doj')">D.O.J. (Jornal)</button>
+            <button class="btn-nav" onclick="navegarAba('divisoes')">Divisões</button>
+            <button class="btn-nav" onclick="navegarAba('diretrizes')">Leis & Diretrizes</button>
+            <button class="btn-nav" onclick="navegarAba('sts')">S.T.S. (Processos)</button>
+            <button class="btn-nav" onclick="navegarAba('admin')">Painel de Controle</button>
         </nav>
     </header>
 
     <div class="container">
-        <!-- ABA MURAIS -->
-        <section id="aba-mural" class="pagina active">
-            <h2>MURAL SUPREMO CJS</h2>
-            <div id="blocoMuralCJS" class="mural-container"></div>
+        <!-- MURAL -->
+        <section id="sec-mural" class="pagina active">
+            <h2>Mural de Ordens Diretas <span id="cnt-mural" class="contador-badge">0</span></h2>
+            <div id="box-mural" class="mural-container"></div>
         </section>
 
-        <!-- ABA D.O.J -->
-        <section id="aba-doj" class="pagina">
-            <h2>DIÁRIO OFICIAL DE JULGAMENTOS (D.O.J.)</h2>
-            <div id="jornal-conteudo" class="jornal-container"></div>
+        <!-- JORNAL (D.O.J) -->
+        <section id="sec-doj" class="pagina">
+            <h2>Diário Oficial de Julgamentos <span id="cnt-doj" class="contador-badge">0</span></h2>
+            <div id="box-jornal" class="jornal-container"></div>
         </section>
 
-        <!-- ABA S.T.S -->
-        <section id="aba-sts" class="pagina">
-            <h2>SUPERIOR TRIBUNAL SUPREMO (S.T.S.)</h2>
-            <div class="discord-roles-box">
-                <p>Escolha o seu Cargo para permissão de canais:</p>
-                <div class="roles-container">
-                    <button class="role-pill role-stm" onclick="atualizarCargoSessao('STM')">STM</button>
-                    <button class="role-pill role-stj" onclick="atualizarCargoSessao('STJ')">STJ</button>
-                    <button class="role-pill role-stf" onclick="atualizarCargoSessao('STF')">STF</button>
-                    <button class="role-pill role-cjsu active" onclick="atualizarCargoSessao('CJSu')">CJSu</button>
-                </div>
+        <!-- DIVISÕES -->
+        <section id="sec-divisoes" class="pagina">
+            <h2>Divisões e Setores Corporativos <span id="cnt-divisoes" class="contador-badge">0</span></h2>
+            <div id="box-divisoes" class="divisao-grid"></div>
+        </section>
+
+        <!-- LEIS E DIRETRIZES -->
+        <section id="sec-diretrizes" class="pagina">
+            <h2>Constituição & Códigos Oficiais <span id="cnt-diretrizes" class="contador-badge">0</span></h2>
+            <div id="box-diretrizes" class="diretriz-container"></div>
+        </section>
+
+        <!-- TRIBUNAIS (S.T.S) -->
+        <section id="sec-sts" class="pagina">
+            <h2>Canais Restritos de Processos <span id="cnt-sts" class="contador-badge">0</span></h2>
+            <div class="discord-panel">
+                <p>Selecione seu Cargo (Controle de Acessos):</p>
+                <div id="box-roles-seletor" class="roles-flex"></div>
             </div>
-            <div id="lista-tickets" class="ticket-lista"></div>
+            <div id="box-tickets" class="ticket-lista"></div>
         </section>
 
-        <!-- ABA DIRETRIZES -->
-        <section id="aba-diretrizes" class="pagina">
-            <h2>DIRETRIZES INSTITUCIONAIS & CÓDIGOS</h2>
-            <div id="diretriz-conteudo" class="diretriz-lista"></div>
-        </section>
-
-        <!-- ABA PAINEL DE CONTROLE -->
-        <section id="aba-admin" class="pagina">
-            <h2>CENTRAL DE EMISSÃO OPERACIONAL</h2>
-            <div class="grid-admin">
-                <!-- Comunicado -->
-                <div class="secao-form">
-                    <h3>📢 Fixar Comunicado Supremo (Mural)</h3>
-                    <div class="form-grupo"><label>Título:</label><input type="text" id="mural-titulo" placeholder="Título do aviso..."></div>
-                    <div class="form-grupo"><label>Conteúdo:</label><textarea id="mural-conteudo-txt" rows="3" placeholder="Mensagem interna..."></textarea></div>
-                    <div class="form-grupo form-grupo-check"><input type="checkbox" id="mural-importante"><label for="mural-importante">Destaque Dourado Brilhante</label></div>
-                    <button class="btn-acao" onclick="enviarNovoMural()">Postar no Mural</button>
-                </div>
-
-                <!-- Diário Oficial -->
-                <div class="secao-form">
-                    <h3>📰 Publicar Matéria / Artigo (D.O.J.)</h3>
-                    <div class="form-grupo"><label>Manchete Principal:</label><input type="text" id="jornal-titulo" placeholder="Ex: SENTENÇA CONDENATÓRIA N° 82"></div>
-                    <div class="form-grupo"><label>Magistrado / Relator:</label><input type="text" id="jornal-autor" placeholder="Ex: Ministro Walyson"></div>
-                    <div class="form-grupo"><label>Texto na Integra:</label><textarea id="jornal-texto" rows="3" placeholder="Insira o texto jurídico do diário..."></textarea></div>
-                    <button class="btn-acao" onclick="enviarNovoJornal()">Publicar no D.O.J.</button>
-                </div>
-
-                <!-- Ticket -->
-                <div class="secao-form">
-                    <h3>🔒 Abrir Canal de Ticket Privado (S.T.S.)</h3>
-                    <div class="form-grupo">
-                        <label>Destinar ao Tribunal Competente:</label>
-                        <select id="ticket-tribunal">
-                            <option value="STM">STM - Superior Tribunal Militar</option>
-                            <option value="STJ">STJ - Superior Tribunal de Justiça</option>
-                            <option value="STF">STF - Supremo Tribunal Federal</option>
-                            <option value="CJSu">CJSu - Comando Jurídico Supremo</option>
+        <!-- PAINEL DE GESTÃO -->
+        <section id="sec-admin" class="pagina">
+            <h2>Central de Administração Suprema</h2>
+            <div class="panel-grid">
+                
+                <!-- Criar Cargo -->
+                <div class="card-form">
+                    <h3>👑 Cadastrar Novo Cargo Organizacional</h3>
+                    <div class="group"><label>Nome do Cargo:</label><input type="text" id="in-cargo-nome" placeholder="Ex: Juiz Auditor"></div>
+                    <div class="group">
+                        <label>Vincular Hierarquia a qual Tribunal:</label>
+                        <select id="in-cargo-tribunal">
+                            <option value="STM">STM - Setor Militar</option>
+                            <option value="STJ">STJ - Setor de Justiça</option>
+                            <option value="STF">STF - Alta Corte</option>
+                            <option value="CJSu">CJSu - Comando Supremo</option>
                         </select>
                     </div>
-                    <div class="form-grupo"><label>Oficial Requerente:</label><input type="text" id="ticket-autor" placeholder="Ex: Corregedor Geral"></div>
-                    <div class="form-grupo"><label>Causa / Descrição Confidencial:</label><textarea id="ticket-motivo" rows="2" placeholder="Insira o conteúdo do processo..."></textarea></div>
-                    <button class="btn-acao" onclick="enviarNovoTicket()">Criar Canal Privado</button>
+                    <div class="group"><label>Cor do Cargo (Hexadecimal ou Nome em inglês):</label><input type="text" id="in-cargo-cor" placeholder="Ex: #9b59b6 ou purple"></div>
+                    <button class="btn-post" onclick="executarCriarCargo()">Adicionar Cargo ao Sistema</button>
                 </div>
 
-                <!-- Diretriz -->
-                <div class="secao-form">
-                    <h3>📜 Adicionar Nova Diretriz / Código</h3>
-                    <div class="form-grupo"><label>Título da Seção/Artigo:</label><input type="text" id="diretriz-titulo-input" placeholder="Ex: Capítulo II - Das Infrações Civis"></div>
-                    <div class="form-grupo"><label>Texto de Ordem Disciplinar:</label><textarea id="diretriz-texto-input" rows="3" placeholder="Escreva o regulamento obrigatório aqui..."></textarea></div>
-                    <button class="btn-acao" onclick="enviarNovaDiretriz()">Fixar Norma</button>
+                <!-- Criar Divisão -->
+                <div class="card-form">
+                    <h3>🛡️ Registrar Nova Divisão / Setor</h3>
+                    <div class="group"><label>Nome da Divisão:</label><input type="text" id="in-div-nome" placeholder="Ex: Corregedoria Geral Tática"></div>
+                    <div class="group"><label>Oficial Comandante / Líder:</label><input type="text" id="in-div-lider" placeholder="Ex: Diretor Walyson"></div>
+                    <div class="group"><label>Atribuições e Missão da Divisão:</label><textarea id="in-div-desc" rows="2" placeholder="Descreva os objetivos..."></textarea></div>
+                    <button class="btn-post" onclick="executarCriarDivisao()">Fundar Divisão</button>
                 </div>
+
+                <!-- Adicionar Artigo de Lei -->
+                <div class="card-form">
+                    <h3>📜 Adicionar Artigo a um Código ou Lei</h3>
+                    <div class="group"><label>Nome do Código / Livro Constitucional:</label><input type="text" id="in-lei-codigo" placeholder="Ex: Código Penal Militar"></div>
+                    <div class="group"><label>Identificador do Artigo:</label><input type="text" id="in-lei-art" placeholder="Ex: Artigo 12, Inciso II"></div>
+                    <div class="group"><label>Texto Legal / Proibição:</label><textarea id="in-lei-txt" rows="3" placeholder="Insira o texto normativo..."></textarea></div>
+                    <button class="btn-post" onclick="executarCriarLei()">Adicionar Artigo de Lei</button>
+                </div>
+
+                <!-- Form Mural -->
+                <div class="card-form">
+                    <h3>📢 Emitir Alerta para o Mural</h3>
+                    <div class="group"><label>Título do Comunicado:</label><input type="text" id="in-mural-tit" placeholder="Ex: [ALERTA] Reunião Geral..."></div>
+                    <div class="group"><label>Mensagem:</label><textarea id="in-mural-msg" rows="3" placeholder="Digite as ordens..."></textarea></div>
+                    <div class="group group-row"><input type="checkbox" id="in-mural-imp"><label for="in-mural-imp">Ativar Borda Dourada Exclusiva</label></div>
+                    <button class="btn-post" onclick="executarPostMural()">Fixar no Mural</button>
+                </div>
+
+                <!-- Form Jornal -->
+                <div class="card-form">
+                    <h3>📰 Redigir Matéria / Nota Oficial para o D.O.J.</h3>
+                    <div class="group">
+                        <label>Tipo de Matéria:</label>
+                        <select id="in-jornal-cat">
+                            <option value="decreto">Decreto Imperial / Supremo</option>
+                            <option value="ata">Ata de Julgamento Coletivo</option>
+                            <option value="noticia">Notícia / Informativo Interno</option>
+                            <option value="juris">Jurisprudência & Súmulas</option>
+                        </select>
+                    </div>
+                    <div class="group"><label>Manchete / Título:</label><input type="text" id="in-jornal-tit" placeholder="Ex: DECRETO N° 41"></div>
+                    <div class="group"><label>Autor / Relator Jurídico:</label><input type="text" id="in-jornal-aut" placeholder="Ex: Ministro Walyson"></div>
+                    <div class="group"><label>Conteúdo Textual Completo:</label><textarea id="in-jornal-txt" rows="4" placeholder="Escreva os fatos..."></textarea></div>
+                    <button class="btn-post" onclick="executarPostJornal()">Publicar no D.O.J.</button>
+                </div>
+
+                <!-- Form Tickets -->
+                <div class="card-form">
+                    <h3>🔒 Instaurar Canal de Ticket Privado (S.T.S.)</h3>
+                    <div class="group">
+                        <label>Vincular ao Tribunal Competente:</label>
+                        <select id="in-tck-trib"></select>
+                    </div>
+                    <div class="group"><label>Oficial Requerente:</label><input type="text" id="in-tck-aut" placeholder="Nome do requerente..."></div>
+                    <div class="group"><label>Causa e Argumentação Inicial:</label><textarea id="in-tck-desc" rows="2" placeholder="Fatos sob sigilo..."></textarea></div>
+                    <button class="btn-post" onclick="executarPostTicket()">Abrir Sala do Processo</button>
+                </div>
+
             </div>
         </section>
     </div>
 
-    <!-- Vinculação Direta com o arquivo Script externo do seu repositório -->
     <script src="https://walysonfelipenascimento-gif.github.io/Script.js/script.js" class="notranslate" translate="no"></script>
 </body>
 </html>
